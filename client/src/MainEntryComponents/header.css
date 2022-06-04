@@ -1,0 +1,35 @@
+.navigationLinks{
+    color: rgb(255, 255, 255);
+}
+
+.navigationText{
+    color: black;
+}
+
+.navigationImage{
+    width: 50%;
+}
+
+.headerLogoLeft{
+    background-image: url(../Images/PolygonBlack.svg);
+    background-repeat: no-repeat;
+    background-size: 70px;
+    background-position: center;
+    height: 100%;
+    width: 100%;
+}
+
+.navigationImage{
+    height: 50px;
+    width: 50%;
+}
+
+.header{
+    height: 100px;
+    width: 95%;
+    background-color:rgb(255, 255, 255);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    z-index: 1;
+
+}

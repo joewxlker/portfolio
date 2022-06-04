@@ -1,0 +1,35 @@
+.SectionOneMain{
+    background-color: white;
+    height: 300px;
+    z-index: 1;
+}
+
+.SectionOneLeft{
+    background-color: white;
+}
+
+.SectionOne-cardsMain{
+    background-color: white;
+    z-index: 1;
+}
+.SectionOne-Cards{
+    background-color: white;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items:center;
+}
+
+.SectionOne-Card{
+    display: flex;
+    justify-content: center;
+    margin: 3%;
+    width: 40%;
+    height: 300px;
+    background: url(../Images/PolygonWhite.svg), linear-gradient(180deg, rgba(226, 202, 240, 0.534), rgba(214, 93, 164, 0)),url(../Images/PolygonWhite.svg);
+    background-size: cover;
+    background-position: center;
+    border-radius: 15px;
+    padding: 3%;
+}

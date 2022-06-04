@@ -1,0 +1,44 @@
+.MainFlex {
+    margin-top: 150px;
+    height: 400px;
+    background-color:rgba(255, 255, 255, 0.726);
+    background-image: url(../Images/PolygonWhite.svg);
+    background-size: cover;
+    background-position: center;
+    width: 70%;
+    border-radius: 15px;
+    z-index: 1;
+    /* box-shadow: inset 0px 0px 10px 1px rgba(0, 0, 0, 0.267); */
+}
+
+.main-svgLink{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    height: 100%;
+    width: 50%;
+}
+
+.main-svgSpan{
+    height: 100%;
+    width: 50%;
+}
+
+.main-canvasSvg{
+    display: relative;
+    width: 50px;
+    height: 50px;
+    background:rgb(150, 197, 241);
+}
+
+.main-Canvas{
+    position:absolute;
+    position: top;
+    z-index: 0;
+    transform:translate(-0px,-500px);
+}
+
+.buttonDrawShapes{
+    z-index: 5;
+}
