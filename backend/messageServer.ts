@@ -120,14 +120,15 @@ app.all('/MainDapp', (req, res, next) => {
 
 // //----------------------------------------------------------------------------------->Send Functions<------------------------------------------------------------------------------------
 
-app.get('/createAccount', (req, res) => {
+app.get('/api/createAccount', (req, res) => {
     res.send('hello world')
 })
 
-app.post('/createAccount', async (req, res) => {
+app.post('/api/createAccount', async (req, res) => {
 
     let username = req.body.username;
     let sender = req.body.sender;
+    console.log(username, sender)
     
     const getUsers = async () => {
         let allUsers;

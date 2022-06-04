@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Fragment } from 'react'
+import { Link } from 'react-router-dom';
 import './SectionOne.css'
 
 export default class SectionOne extends Component {
@@ -17,12 +18,18 @@ export default class SectionOne extends Component {
                         <p>Something about the supplied image here</p>
                     </div> */}
                 </div>
-                <div className='SectionOne-cardsMain w-100 d-flex flex-column justify-items-center align-items-center'>
+                <div className='SectionOne-cardsMain w-100 d-flex flex-column justify-content-center align-items-center'>
                     <div className='SectionOne-Cards'>
-                        <div className='SectionOne-Card'><span className='d-flex flex-column'><h4>something</h4><img src={''} alt='' /></span></div>
-                        <div className='SectionOne-Card'><span className='d-flex flex-column'><h4>something</h4><img src={''} alt='' /></span></div>
-                        <div className='SectionOne-Card'><span className='d-flex flex-column'><h4>something</h4><img src={''} alt='' /></span></div>
-                        <div className='SectionOne-Card'><span className='d-flex flex-column'><h4>something</h4><img src={''} alt='' /></span></div>
+                        <div className='SectionOne-Card justify-content-center align-items-center'>
+                            <span className='d-flex flex-column'>
+                                <h4></h4>
+                                <img src={''} alt='' />
+                            </span>
+                            <Link to='/Dapp' className=''><button className='btn bg-dark text-light' ><h4>Launch Dapp</h4></button></Link>
+                        </div>
+                        <div className='SectionOne-Card'><span className='d-flex flex-column'><h4></h4><img src={''} alt='' /></span></div>
+                        <div className='SectionOne-Card'><span className='d-flex flex-column'><h4></h4><img src={''} alt='' /></span></div>
+                        <div className='SectionOne-Card'><span className='d-flex flex-column'><h4></h4><img src={''} alt='' /></span></div>
                     </div>
                 </div>
             </Fragment>

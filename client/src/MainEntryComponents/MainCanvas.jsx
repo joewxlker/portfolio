@@ -34,7 +34,7 @@ class CanvasShapes extends React.Component {
             let c = canvasRef.current
             let ctx = c.getContext('2d')
             var path2 = new Path2D();
-            ctx.fillStyle = 'rgb(189, 142, 216)';
+            ctx.fillStyle = 'grey';
             path2.rect(randomNumX, randomNumY, randomNumY, randomNumX);
             ctx.fill(path2);
             ctx.rotate(((2 * Math.PI) / 6) * randomNumX + ((2 * Math.PI) / 6000) * randomNumY);
@@ -61,7 +61,7 @@ class CanvasShapes extends React.Component {
                 drawShapes2();
             }, 1000)
         });
-
+ 
         useEffect(() => {
             setInterval(() => {
                 deleteShapes();

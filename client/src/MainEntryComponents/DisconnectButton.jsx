@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export default class ConnectButton extends Component {
+export default class DisconnectButton extends Component {
 
     connect = () => {
 
@@ -23,8 +23,8 @@ export default class ConnectButton extends Component {
     
     render() {
         return (
-            <button className='connectButton w-25 mr-5 btn bg-dark text-light' onClick={this.connect}>
-                <span>Connect</span>
+            <button className='connectButton w-25 mr-5 btn bg-dark text-light' onClick={this.Disconnect}>
+                <span>Disconnect</span>
             </button>
         )
     }
