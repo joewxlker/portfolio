@@ -11,5 +11,10 @@ export const useSetUserAddress = () => {
 
     const [address, setAddress] = useState('')
 
-    return [address, () => setAddress('')]
+    const getAddress = async () => {
+        let account = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        setAddress(account)
+    }
+
+    return [address, getAddress]
 }

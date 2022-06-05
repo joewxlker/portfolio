@@ -7,14 +7,12 @@ const HandleLogin = (props) => {
 
     // const [address, setAddress] = useSetUserAddress({address: ''});
     const [value, setForm] = useSetForm({ username: '' });
-    const [address, setAddress] = useSetUserAddress('')
-
-    console.log(address)
+    const [address, getAddress] = useSetUserAddress('')
 
     const login = (event) => {
         event.preventDefault()
-        setAddress('new')
-        console.log(value)
+        getAddress().then(console.log(value.username, address[0]))
+        
     }
     return (
         <>
