@@ -25,7 +25,7 @@ export default class SectionOne extends Component {
                                 <h4></h4>
                                 <img src={''} alt='' />
                             </span>
-                            <Link to='/Dapp' className=''><button className='btn bg-dark text-light' ><h4>Launch Dapp</h4></button></Link>
+                            <Link to='/Login' className=''><button className='btn bg-dark text-light' ><h4>Launch Dapp</h4></button></Link>
                         </div>
                         <div className='SectionOne-Card'><span className='d-flex flex-column'><h4></h4><img src={''} alt='' /></span></div>
                         <div className='SectionOne-Card'><span className='d-flex flex-column'><h4></h4><img src={''} alt='' /></span></div>

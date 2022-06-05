@@ -129,62 +129,45 @@ app.post('/api/createAccount', async (req, res) => {
     let username = req.body.username;
     let sender = req.body.sender;
     console.log(username, sender)
-    
-    const getUsers = async () => {
-        let allUsers;
-        await myContract.methods.getAllUsers().call((err, response) => {
-            allUsers = response
-            console.log(allUsers)
-        })
-        return allUsers;
-    }
 
-    const checkifUserExists = (allUsers) => {
-        let sender = req.body.sender;
-        console.log(sender)
-        let exists;
-        for (let v in allUsers) {
-            if (sender !== allUsers[v]) { exists = false;}
-            else { exists = true; break };
+    const createAccount = async () => {
+        try {
+            console.log('creating account', req.body)
+            const tx = myContract.methods.createAccount(username, sender);
+            let gas = await tx.estimateGas({ from: address });
+            let gasPrice = await web3.eth.getGasPrice();
+            let data = tx.encodeABI();
+            let nonce = await web3.eth.getTransactionCount(address)
+
+            let signedTx = await web3.eth.accounts.signTransaction({
+                to: contractAddress,
+                data: data,
+                gas: gas,
+                gasPrice: gasPrice,
+                nonce: nonce,
+                chainId: networkId,
+            }, secretKey,
+            )
+            let receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction)
+            console.log(`transaction hash: ${receipt.transactionHash}`)
+            res.send({ txnHash: `transaction hash: ${receipt.transactionHash}` })
         }
-        return exists;
-    }
-
-    const createAccount = async (exists) => {
-        if (exists) {
-            console.log('user already exist')
-        } else {
-            try {
-                console.log('creating account', req.body)
-                const tx = myContract.methods.createAccount(username, sender);
-                let gas = await tx.estimateGas({ from: address });
-                let gasPrice = await web3.eth.getGasPrice();
-                let data = tx.encodeABI();
-                let nonce = await web3.eth.getTransactionCount(address)
-
-                let signedTx = await web3.eth.accounts.signTransaction({
-                    to: contractAddress,
-                    data: data,
-                    gas: gas,
-                    gasPrice: gasPrice,
-                    nonce: nonce,
-                    chainId: networkId,
-                }, secretKey,
-                )
-                let receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction)
-                console.log(`transaction hash: ${receipt.transactionHash}`)
-                res.send({ txnHash: `transaction hash: ${receipt.transactionHash}` })
+        catch (err) {
+            let _err: string;
+            if (err.data === null) {
+                _err = 'no gas';
             }
-            catch (err) {
-                console.log(err);
-                res.send(err);
+            else if (err.data === '0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001b5573657220697320616c72656164792072656769737465726564210000000000') {
+                _err ='account exists';
             }
+            res.send({ _err: _err });
+            console.log(_err)
         }
     };
 
-    getUsers()
-    .then((allUsers) => checkifUserExists(allUsers))
-    .then((exists) => createAccount(exists))
+
+    createAccount()
+
 })
  
 app.post('/addFriend', async (req, res) => {

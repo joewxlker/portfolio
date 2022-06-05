@@ -1,0 +1,81 @@
+.Messenger-header{
+    height: 20px;
+    width: 100%;
+    background-color: white;
+}
+
+.Messenger-main{
+    background-color: aliceblue;
+    width: 97%;
+    height: 100%;
+    max-height: 900px;
+    min-height: 400px;
+}
+
+.Messenger-main-sidebar{
+    width: 3%;
+    height: inherit;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    padding: 4px;
+}
+
+.Messenger-main-body{
+    display: flex;
+    flex-direction: row;
+}
+
+.Messenger-users{
+    height: 530px;
+    width: 20%;
+}
+
+.Messenger-message-history{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    height: inherit;
+    justify-content:space-between;
+}
+
+.Messenger-media-content{
+    height: 90%;
+    width: 20%;
+}
+
+.Messenger-Component-header{
+    height: 60px;
+    width: 100%;
+    background-color: aliceblue;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.Messenger-message-history-body{
+    height: 500px;
+    overflow: scroll;
+}
+
+.Messenger-text-body{
+    margin: 3%;
+    background: white;
+}
+
+.Messenger-footer{
+    height: 30px;
+    background-color: rgb(121, 121, 121);
+}
+
+.Messenger-add-user{
+    cursor: pointer;
+    width: 100;
+    display: flex;
+    flex-direction :column;
+    justify-content: center;
+    align-items: center;
+}

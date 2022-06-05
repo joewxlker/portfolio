@@ -1,13 +1,17 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { useEffect, useState } from 'react';
+import Messenger from './Messenger';
 import Login from './Login'
 
-export default class Dapp extends Component {
+const Dapp = () => {
 
-    render() {
-        return (
-            // <div className='w-100 d-flex flex-column align-items-center'>
-                <Login/>
-            // </div>
-        )
-    }
-}
+    return (
+        <>
+            <Login />
+            <Messenger />
+        </>
+    );
+        
+};
+
+export default Dapp;
