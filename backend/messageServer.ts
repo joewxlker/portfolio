@@ -4,6 +4,7 @@
 const express = require("express");
 const http = require('http');
 const Web3=  require("web3")
+const ReactDOMServer = require('react-dom/server');
 const ethers = require("ethers");
 const app = express(); 
 const PORT = process.env.PORT || 5000;
@@ -39,6 +40,9 @@ server.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)
 });
 
+//------------------------------------------------------------------------> Server Rendering < -----------------------------------------------------------------------------------------------
+
+
 //-----------------------------------------------------------------------------> ENUMS <------------------------------------------------------------------------------------------------------
 
 // enum currentState {
@@ -49,74 +53,88 @@ server.listen(PORT, () => {
 // }
 //------------------------------------------------------------------------->Call Functions<-------------------------------------------------------------------------------------------------
 
-app.post('/friendCode', async (req, res) => {
-    console.log('fetching friend code', req.body)
-    let sender = req.body.sender;
-    let receiver = req.body.receiver;
-    let friendCode
-    try{
-
-                await myContract.methods.getChatCode(sender, receiver).call((req, res) => {
-                    friendCode = res;
-                })
-                res.send({ friendCode: friendCode })
-    }
-    catch(err){console.log(err)}
+app.get('/api/allUser', (req, res) => {
+    res.send('hello')
 })
- 
-app.post('/friendList', async (req, res) => {
-    console.log('fetching friends', req.body)
-    let sender = req.body.sender
-    let friends;
-    if (sender === undefined) { console.log('invalid senderAddress@/friendList',) } 
-    else if (sender === '') { console.log('invalid senderAddress@/friendList',) }
-    else {
-        try { await myContract.methods.getFriends(sender).call((req, res) => {
-                friends = res;
-            })
-            res.send({ friendList: friends })
-        }catch (err) { console.log(err) }
-    };
-})
-
-app.post('/MessageHistory', async (req, res) => {
-    console.log('loading message history', req.body)
-    let friendCode = req.body.friendCode
-    let receivedMessages;
-    if (req.body.friendCode === undefined) { return console.log('invalid friendCode@MessageHistory') }
-    else if (req.body.friendCode === '') { return console.log('invalid friendCode@MessageHistory') }
-    else {
-        await myContract.methods.readMessage(friendCode).call((err, res) => {
-            receivedMessages = res;
-        })
-        res.send({receivedMessages: receivedMessages})
-    }
+app.post('/api/allUsers', async (req, res) => {
+    let allUsers;
+    await myContract.methods.getAllUsers().call((err, response) => {
+        allUsers = response
+    })
+    res.send({allUsers : allUsers});
 });
 
-app.post('/allUsers', async (req, res) => {
-    let allUsers;
-    console.log('fetching all users', req.body)
-    await myContract.methods.getAllUsers().call((err, response) => {
-        allUsers = response 
-    });
-})   
-
-let sender; 
-let activeChat;  
-app.post('/getActive', async (req, res) => {
-    console.log('getting active', req.body)
-    sender = req.body.sender;
-    await myContract.methods.getActiveChat(sender).call((err, response) => {
-    activeChat = response;
-    }).then(
-        res.send({activeChat: activeChat})
-    )
+app.post('/api/userInfo', async (req, res) => {
+    try {
+        let userInfo: Array<string>;
+        await myContract.methods.getAccountInfo(req.body.sender).call((err, response) => {
+            userInfo = response
+        })
+        res.send({ userInfo: userInfo })
+    } catch (err) {
+        res.send(err);
+    }
 })
 
-app.all('/MainDapp', (req, res, next) => {
-    console.log('accessing the next secret')
-    next();
-})
+// app.post('/friendCode', async (req, res) => {
+//     console.log('fetching friend code', req.body)
+//     let sender = req.body.sender;
+//     let receiver = req.body.receiver;
+//     let friendCode
+//     try{
+
+//                 await myContract.methods.getChatCode(sender, receiver).call((req, res) => {
+//                     friendCode = res;
+//                 })
+//                 res.send({ friendCode: friendCode })
+//     }
+//     catch(err){console.log(err)}
+// })
+ 
+// app.post('/friendList', async (req, res) => {
+//     console.log('fetching friends', req.body)
+//     let sender = req.body.sender
+//     let friends;
+//     if (sender === undefined) { console.log('invalid senderAddress@/friendList',) } 
+//     else if (sender === '') { console.log('invalid senderAddress@/friendList',) }
+//     else {
+//         try { await myContract.methods.getFriends(sender).call((req, res) => {
+//                 friends = res;
+//             })
+//             res.send({ friendList: friends })
+//         }catch (err) { console.log(err) }
+//     };
+// })
+
+// app.post('/MessageHistory', async (req, res) => {
+//     console.log('loading message history', req.body)
+//     let friendCode = req.body.friendCode
+//     let receivedMessages;
+//     if (req.body.friendCode === undefined) { return console.log('invalid friendCode@MessageHistory') }
+//     else if (req.body.friendCode === '') { return console.log('invalid friendCode@MessageHistory') }
+//     else {
+//         await myContract.methods.readMessage(friendCode).call((err, res) => {
+//             receivedMessages = res;
+//         })
+//         res.send({receivedMessages: receivedMessages})
+//     }
+// });
+// let sender; 
+// let activeChat;  
+// app.post('/getActive', async (req, res) => {
+//     console.log('getting active', req.body)
+//     sender = req.body.sender;
+//     await myContract.methods.getActiveChat(sender).call((err, response) => {
+//     activeChat = response;
+//     }).then(
+//         res.send({activeChat: activeChat})
+//     )
+// })
+
+// app.all('/MainDapp', (req, res, next) => {
+//     console.log('accessing the next secret')
+//     next();
+// })
 
 // //----------------------------------------------------------------------------------->Send Functions<------------------------------------------------------------------------------------
 
@@ -170,157 +188,148 @@ app.post('/api/createAccount', async (req, res) => {
 
 })
  
-app.post('/addFriend', async (req, res) => {
-    console.log('adding friend', req.body)
+// app.post('/addFriend', async (req, res) => {
+//     console.log('adding friend', req.body)
+//     const checkifUserExists = (allUsers) => {
+//         let receiver = req.body.receiver;
+//         let exists;
+//         for (let v in allUsers) {
+//             console.log(allUsers[v])
+//             if (receiver !== allUsers[v]) { exists = false }
+//             else { exists = true;  break};
+//         }
+//         return exists;
+//     }
 
-    const getUsers = async () => {
-        let allUsers;
-        await myContract.methods.getAllUsers().call((err, response) => {
-            allUsers = response
-        })
-        return allUsers;
-    }
-
-    const checkifUserExists = (allUsers) => {
-        let receiver = req.body.receiver;
-        let exists;
-        for (let v in allUsers) {
-            console.log(allUsers[v])
-            if (receiver !== allUsers[v]) { exists = false }
-            else { exists = true;  break};
-        }
-        return exists;
-    }
-
-    const addUser = async (exists) => {
-        if (!exists) {
-            console.log('user does not exist')
-        } else {
-            try {
-                console.log('adding friend', req.body)
-                let receiver = req.body.receiver;
-                let sender = req.body.sender;
-                const tx = myContract.methods.addFriend(receiver, sender);
-                let gas = await tx.estimateGas({ from: address });
-                let gasPrice = await web3.eth.getGasPrice();
-                let data = tx.encodeABI();
-                let nonce = await web3.eth.getTransactionCount(address)
+//     const addUser = async (exists) => {
+//         if (!exists) {
+//             console.log('user does not exist')
+//         } else {
+//             try {
+//                 console.log('adding friend', req.body)
+//                 let receiver = req.body.receiver;
+//                 let sender = req.body.sender;
+//                 const tx = myContract.methods.addFriend(receiver, sender);
+//                 let gas = await tx.estimateGas({ from: address });
+//                 let gasPrice = await web3.eth.getGasPrice();
+//                 let data = tx.encodeABI();
+//                 let nonce = await web3.eth.getTransactionCount(address)
         
-                let signedTx = await web3.eth.accounts.signTransaction({
-                    to: contractAddress,
-                    data: data,
-                    gas: gas,
-                    gasPrice: gasPrice,
-                    nonce: nonce,
-                    chainId: networkId,
-                }, secretKey,
-                )
-                let receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction)
-                console.log(`transaction hash: ${receipt.transactionHash}`)
-                res.send({ txnHash: `transaction hash: ${receipt.transactionHash}` });
-            }
-            catch (err) {
-                console.log(err)
-            }
-        }
-    }
+//                 let signedTx = await web3.eth.accounts.signTransaction({
+//                     to: contractAddress,
+//                     data: data,
+//                     gas: gas,
+//                     gasPrice: gasPrice,
+//                     nonce: nonce,
+//                     chainId: networkId,
+//                 }, secretKey,
+//                 )
+//                 let receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction)
+//                 console.log(`transaction hash: ${receipt.transactionHash}`)
+//                 res.send({ txnHash: `transaction hash: ${receipt.transactionHash}` });
+//             }
+//             catch (err) {
+//                 console.log(err)
+//             }
+//         }
+//     }
 
 
-    getUsers()
-        .then((allUsers) => checkifUserExists(allUsers))
-        .then((exists) => addUser(exists))
-})
+//     getUsers()
+//         .then((allUsers) => checkifUserExists(allUsers))
+//         .then((exists) => addUser(exists))
+// })
 
-app.post('/setActive', async (req, res) => {
-    console.log('setting active', req.body)
+// app.post('/setActive', async (req, res) => {
+//     console.log('setting active', req.body)
 
-    const getUsers = async () => {
-        let allUsers;
-        await myContract.methods.getAllUsers().call((err, response) => {
-            allUsers = response
-        })
-        return allUsers;
-    }
-    const checkifUserExists = (allUsers) => {
-        let receiver = req.body.receiver;
-        let exists;
-        for (let v in allUsers) {
-            console.log(allUsers[v])
-            if (receiver !== allUsers[v]) { exists = false }
-            else { exists = true;  break};
-        }
-        return exists;
-    }
-    const setChat = async (exists) => {
-            let sender = req.body.sender;
-            let receiver = req.body.receiver;
-        if (!exists) {
-            console.log('err')
-            return res.send({ txnHash: 'user does not exist' })
-            }
-        else {
-            try {
-                let tx = myContract.methods.setChatActive(sender, receiver);
-                let gas = await tx.estimateGas({ from: address });
-                let gasPrice = await web3.eth.getGasPrice();
-                let data = tx.encodeABI();
-                let nonce = await web3.eth.getTransactionCount(address)
+//     const getUsers = async () => {
+//         let allUsers;
+//         await myContract.methods.getAllUsers().call((err, response) => {
+//             allUsers = response
+//         })
+//         return allUsers;
+//     }
+//     const checkifUserExists = (allUsers) => {
+//         let receiver = req.body.receiver;
+//         let exists;
+//         for (let v in allUsers) {
+//             console.log(allUsers[v])
+//             if (receiver !== allUsers[v]) { exists = false }
+//             else { exists = true;  break};
+//         }
+//         return exists;
+//     }
+//     const setChat = async (exists) => {
+//             let sender = req.body.sender;
+//             let receiver = req.body.receiver;
+//         if (!exists) {
+//             console.log('err')
+//             return res.send({ txnHash: 'user does not exist' })
+//             }
+//         else {
+//             try {
+//                 let tx = myContract.methods.setChatActive(sender, receiver);
+//                 let gas = await tx.estimateGas({ from: address });
+//                 let gasPrice = await web3.eth.getGasPrice();
+//                 let data = tx.encodeABI();
+//                 let nonce = await web3.eth.getTransactionCount(address)
 
-                let signedTx = await web3.eth.accounts.signTransaction({
-                    to: contractAddress,
-                    data: data,
-                    gas: gas,
-                    gasPrice: gasPrice,
-                    nonce: nonce,
-                    chainId: networkId,
-                }, secretKey,
-                )
-                let receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction)
-                console.log(`transaction hash: ${receipt.transactionHash}`)
-                res.send({ txnHash: `transaction hash: ${receipt.transactionHash}` })
-            }
-            catch (err) {
-                console.log('failed to set active: ', err)
-            }
-        };
-    };
+//                 let signedTx = await web3.eth.accounts.signTransaction({
+//                     to: contractAddress,
+//                     data: data,
+//                     gas: gas,
+//                     gasPrice: gasPrice,
+//                     nonce: nonce,
+//                     chainId: networkId,
+//                 }, secretKey,
+//                 )
+//                 let receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction)
+//                 console.log(`transaction hash: ${receipt.transactionHash}`)
+//                 res.send({ txnHash: `transaction hash: ${receipt.transactionHash}` })
+//             }
+//             catch (err) {
+//                 console.log('failed to set active: ', err)
+//             }
+//         };
+//     };
 
-    getUsers()
-        .then((allUsers) => checkifUserExists(allUsers))
-        .then((exists) => setChat(exists));
-}
-);
+//     getUsers()
+//         .then((allUsers) => checkifUserExists(allUsers))
+//         .then((exists) => setChat(exists));
+// }
+// );
 
-app.post('/sendMessage', async (req, res) => {
-    console.log('sending message', req.body)
-    let sender = req.body.sender
-    let receiver = req.body.receiver
-    let message = req.body.message
-    if (sender === undefined) { console.log('invalid senderAddress@/sendMessage') }
-    else if (sender === '') { console.log('invalid senderAddress@/sendMessage') }
-    if (receiver === undefined) { console.log('invalid receiverAddress@/sendMessage') }
-    else if (receiver === '') { console.log('invalid receiverAddress@/sendMessage') }
-    else {
-        let tx = myContract.methods.sendMessage(sender, receiver, message)
-        let gas = await tx.estimateGas({ from: address });
-        let gasPrice = await web3.eth.getGasPrice();
-        let data = tx.encodeABI();
-        let nonce = await web3.eth.getTransactionCount(address)
+// app.post('/sendMessage', async (req, res) => {
+//     console.log('sending message', req.body)
+//     let sender = req.body.sender
+//     let receiver = req.body.receiver
+//     let message = req.body.message
+//     if (sender === undefined) { console.log('invalid senderAddress@/sendMessage') }
+//     else if (sender === '') { console.log('invalid senderAddress@/sendMessage') }
+//     if (receiver === undefined) { console.log('invalid receiverAddress@/sendMessage') }
+//     else if (receiver === '') { console.log('invalid receiverAddress@/sendMessage') }
+//     else {
+//         let tx = myContract.methods.sendMessage(sender, receiver, message)
+//         let gas = await tx.estimateGas({ from: address });
+//         let gasPrice = await web3.eth.getGasPrice();
+//         let data = tx.encodeABI();
+//         let nonce = await web3.eth.getTransactionCount(address)
 
-        let signedTx = await web3.eth.accounts.signTransaction({
-            to: contractAddress,
-            data: data,
-            gas: gas,
-            gasPrice: gasPrice,
-            nonce: nonce,
-            chainId: networkId,
-        }, secretKey,
-        )
-        let receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction)
-        console.log(`transaction hash: ${receipt.transactionHash}`)
-        res.send({ txnHash: `transaction hash: ${receipt.transactionHash}`})
-    }
-})
+//         let signedTx = await web3.eth.accounts.signTransaction({
+//             to: contractAddress,
+//             data: data,
+//             gas: gas,
+//             gasPrice: gasPrice,
+//             nonce: nonce,
+//             chainId: networkId,
+//         }, secretKey,
+//         )
+//         let receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction)
+//         console.log(`transaction hash: ${receipt.transactionHash}`)
+//         res.send({ txnHash: `transaction hash: ${receipt.transactionHash}`})
+//     }
+// })
 
 
 //--------------------------------------------------------------------------------------->ROUTING<------------------------------------------------------------------------------------

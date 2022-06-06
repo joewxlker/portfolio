@@ -1,17 +1,17 @@
 import { Navigate } from "react-router-dom";
 
+const useWithAuth = (Component) => {
 
-const withAuth = (Component) => {
-    const AuthRoute = () => {
-      const isAuth = !!localStorage.getItem("token");
-      if (isAuth) {
-        return <Component />;
-      } else {
-        return <Navigate to="/" />;
-      }
-    };
+  const AuthRoute = () => {
+    const isAuth = !!localStorage.getItem('token');
+    if (isAuth) {
+      return <Component />;
+    } else {
+      return <Navigate to="/Login" />;
+    }
+  };
   
     return AuthRoute;
 };
   
-export default withAuth
+export default useWithAuth
