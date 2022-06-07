@@ -3,7 +3,7 @@
 // wss://purple-red-paper.bsc.quiknode.pro/ac051feae4b6bac81afa8edce0e30f0ab2f6e669/ binance 2
 const express = require("express");
 const http = require('http');
-const Web3=  require("web3")
+const Web3 =  require("web3")
 const ReactDOMServer = require('react-dom/server');
 const ethers = require("ethers");
 const app = express(); 
@@ -53,12 +53,12 @@ server.listen(PORT, () => {
 // }
 //------------------------------------------------------------------------->Call Functions<-------------------------------------------------------------------------------------------------
 
-app.get('/api/allUser', (req, res) => {
+app.get('/api/allUser', (_req, res) => {
     res.send('hello')
 })
-app.post('/api/allUsers', async (req, res) => {
+app.post('/api/allUsers', async (_req, res) => {
     let allUsers;
-    await myContract.methods.getAllUsers().call((err, response) => {
+    await myContract.methods.getAllUsers().call((_err, response) => {
         allUsers = response
     })
     res.send({allUsers : allUsers});
@@ -67,7 +67,7 @@ app.post('/api/allUsers', async (req, res) => {
 app.post('/api/userInfo', async (req, res) => {
     try {
         let userInfo: Array<string>;
-        await myContract.methods.getAccountInfo(req.body.sender).call((err, response) => {
+        await myContract.methods.getAccountInfo(req.body.sender).call((_err, response) => {
             userInfo = response
         })
         res.send({ userInfo: userInfo })
@@ -120,16 +120,21 @@ app.post('/api/userInfo', async (req, res) => {
 //     }
 // });
 // let sender; 
-// let activeChat;  
-// app.post('/getActive', async (req, res) => {
-//     console.log('getting active', req.body)
-//     sender = req.body.sender;
-//     await myContract.methods.getActiveChat(sender).call((err, response) => {
-//     activeChat = response;
-//     }).then(
-//         res.send({activeChat: activeChat})
-//     )
-// })
+ 
+app.post('/api/activeChat', async (req, res) => {
+    let sender = req.body.sender;
+    let activeChat; 
+    try {
+        await myContract.methods.getActiveChat(sender).call((_err, response) => {
+            activeChat = response;
+        }).then(
+            res.send({ activeChat: activeChat })
+        )
+    }
+    catch (err) {
+        console.log(err)
+    }
+})
 
 // app.all('/MainDapp', (req, res, next) => {
 //     console.log('accessing the next secret')
@@ -138,20 +143,16 @@ app.post('/api/userInfo', async (req, res) => {
 
 // //----------------------------------------------------------------------------------->Send Functions<------------------------------------------------------------------------------------
 
-app.get('/api/createAccount', (req, res) => {
+app.get('/api/createAccount', (_req, res) => {
     res.send('hello world')
 })
 
 app.post('/api/createAccount', async (req, res) => {
 
-    let username = req.body.username;
-    let sender = req.body.sender;
-    console.log(username, sender)
-
     const createAccount = async () => {
         try {
             console.log('creating account', req.body)
-            const tx = myContract.methods.createAccount(username, sender);
+            const tx = myContract.methods.createAccount(req.body.username, req.body.sender);
             let gas = await tx.estimateGas({ from: address });
             let gasPrice = await web3.eth.getGasPrice();
             let data = tx.encodeABI();
@@ -182,123 +183,64 @@ app.post('/api/createAccount', async (req, res) => {
             console.log(_err)
         }
     };
-
-
     createAccount()
-
 })
  
-// app.post('/addFriend', async (req, res) => {
-//     console.log('adding friend', req.body)
-//     const checkifUserExists = (allUsers) => {
-//         let receiver = req.body.receiver;
-//         let exists;
-//         for (let v in allUsers) {
-//             console.log(allUsers[v])
-//             if (receiver !== allUsers[v]) { exists = false }
-//             else { exists = true;  break};
-//         }
-//         return exists;
-//     }
-
-//     const addUser = async (exists) => {
-//         if (!exists) {
-//             console.log('user does not exist')
-//         } else {
-//             try {
-//                 console.log('adding friend', req.body)
-//                 let receiver = req.body.receiver;
-//                 let sender = req.body.sender;
-//                 const tx = myContract.methods.addFriend(receiver, sender);
-//                 let gas = await tx.estimateGas({ from: address });
-//                 let gasPrice = await web3.eth.getGasPrice();
-//                 let data = tx.encodeABI();
-//                 let nonce = await web3.eth.getTransactionCount(address)
+app.post('/addFriend', async (req, res) => {
+    console.log('adding friend', req.body)
+    try {
+        console.log('adding friend', req.body)
+        let receiver = req.body.receiver;
+        let sender = req.body.sender;
+        const tx = myContract.methods.addFriend(receiver, sender);
+        let gas = await tx.estimateGas({ from: address });
+        let gasPrice = await web3.eth.getGasPrice();
+        let data = tx.encodeABI();
+        let nonce = await web3.eth.getTransactionCount(address)
         
-//                 let signedTx = await web3.eth.accounts.signTransaction({
-//                     to: contractAddress,
-//                     data: data,
-//                     gas: gas,
-//                     gasPrice: gasPrice,
-//                     nonce: nonce,
-//                     chainId: networkId,
-//                 }, secretKey,
-//                 )
-//                 let receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction)
-//                 console.log(`transaction hash: ${receipt.transactionHash}`)
-//                 res.send({ txnHash: `transaction hash: ${receipt.transactionHash}` });
-//             }
-//             catch (err) {
-//                 console.log(err)
-//             }
-//         }
-//     }
+        let signedTx = await web3.eth.accounts.signTransaction({
+            to: contractAddress,
+            data: data,
+            gas: gas,
+            gasPrice: gasPrice,
+            nonce: nonce,
+            chainId: networkId,
+        }, secretKey,
+        )
+        let receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction)
+        console.log(`transaction hash: ${receipt.transactionHash}`)
+        res.send({ txnHash: `transaction hash: ${receipt.transactionHash}` });
+    }
+    catch (err) {
+        console.log(err)
+    }
+});
 
+app.post('/api/setActive', async (req, res) => {
+    try {
+        let tx = myContract.methods.setChatActive(req.body.sender, req.body.receiver);
+        let gas = await tx.estimateGas({ from: address });
+        let gasPrice = await web3.eth.getGasPrice();
+        let data = tx.encodeABI();
+        let nonce = await web3.eth.getTransactionCount(address)
 
-//     getUsers()
-//         .then((allUsers) => checkifUserExists(allUsers))
-//         .then((exists) => addUser(exists))
-// })
-
-// app.post('/setActive', async (req, res) => {
-//     console.log('setting active', req.body)
-
-//     const getUsers = async () => {
-//         let allUsers;
-//         await myContract.methods.getAllUsers().call((err, response) => {
-//             allUsers = response
-//         })
-//         return allUsers;
-//     }
-//     const checkifUserExists = (allUsers) => {
-//         let receiver = req.body.receiver;
-//         let exists;
-//         for (let v in allUsers) {
-//             console.log(allUsers[v])
-//             if (receiver !== allUsers[v]) { exists = false }
-//             else { exists = true;  break};
-//         }
-//         return exists;
-//     }
-//     const setChat = async (exists) => {
-//             let sender = req.body.sender;
-//             let receiver = req.body.receiver;
-//         if (!exists) {
-//             console.log('err')
-//             return res.send({ txnHash: 'user does not exist' })
-//             }
-//         else {
-//             try {
-//                 let tx = myContract.methods.setChatActive(sender, receiver);
-//                 let gas = await tx.estimateGas({ from: address });
-//                 let gasPrice = await web3.eth.getGasPrice();
-//                 let data = tx.encodeABI();
-//                 let nonce = await web3.eth.getTransactionCount(address)
-
-//                 let signedTx = await web3.eth.accounts.signTransaction({
-//                     to: contractAddress,
-//                     data: data,
-//                     gas: gas,
-//                     gasPrice: gasPrice,
-//                     nonce: nonce,
-//                     chainId: networkId,
-//                 }, secretKey,
-//                 )
-//                 let receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction)
-//                 console.log(`transaction hash: ${receipt.transactionHash}`)
-//                 res.send({ txnHash: `transaction hash: ${receipt.transactionHash}` })
-//             }
-//             catch (err) {
-//                 console.log('failed to set active: ', err)
-//             }
-//         };
-//     };
-
-//     getUsers()
-//         .then((allUsers) => checkifUserExists(allUsers))
-//         .then((exists) => setChat(exists));
-// }
-// );
+        let signedTx = await web3.eth.accounts.signTransaction({
+            to: contractAddress,
+            data: data,
+            gas: gas,
+            gasPrice: gasPrice,
+            nonce: nonce,
+            chainId: networkId,
+        }, secretKey,
+        )
+        let receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction)
+        console.log(`transaction hash: ${receipt.transactionHash}`)
+        res.send({ txnHash: `transaction hash: ${receipt.transactionHash}` })
+    }
+    catch (err) {
+        console.log('failed to set active: ', err)
+    };
+});
 
 // app.post('/sendMessage', async (req, res) => {
 //     console.log('sending message', req.body)

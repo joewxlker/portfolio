@@ -18,6 +18,10 @@ const Messenger = () => {
         //load page
     }, [])
 
+    //need to define some code somwehere which
+    //will run once everything has finished loading
+    //and determine this setLoading value;
+
     return (
         <>
             {loading === false ? (
@@ -49,7 +53,8 @@ const Messenger = () => {
                     <div className='text-light'>
                         APP LOADING...
                     </div>
-                </div>
+                    </div>
+                    //Need to change the css of this element and add spinner
             )}
                 
         </>

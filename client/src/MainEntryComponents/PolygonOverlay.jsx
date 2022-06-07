@@ -5,6 +5,7 @@ export default class PolygonOverlay extends Component {
     render() {
         return (
             <div className='rootPolygonOverlay'>
+                
             </div>
         )
     }

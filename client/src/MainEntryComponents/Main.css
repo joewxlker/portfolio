@@ -1,14 +1,19 @@
 .MainFlex {
     margin-top: 150px;
-    height: 400px;
-    background-color:rgba(255, 255, 255, 0.726);
-    background-image: url(../Images/PolygonWhite.svg);
+    /* background: linear-gradient(rgb(255, 255, 255),rgba(145, 145, 145, 0.726)),url(../Images/PolygonWhite.svg); */
     background-size: cover;
     background-position: center;
-    width: 70%;
+    width: 90%;
     border-radius: 15px;
     z-index: 1;
-    /* box-shadow: inset 0px 0px 10px 1px rgba(0, 0, 0, 0.267); */
+    min-width: 400px;
+    /* box-shadow: 0px 0px 10px 7px rgba(0, 0, 0, 0.719); */
+    flex-wrap:wrap;
+}
+
+.Main-welcomeContainer{
+    min-width: 200px;
+    width: 40%;
 }
 
 .main-svgLink{
@@ -36,9 +41,92 @@
     position:absolute;
     position: top;
     z-index: 0;
-    transform:translate(-0px,-500px);
+    transform:translate(-44px,-540px);
 }
 
-.buttonDrawShapes{
-    z-index: 5;
+.Main-side-bar{
+    /* display:block; */
+    position:fixed;
+    display: absolute;
+    left: 0;
+    top: 10%;
+    margin-top: 5%;
+    background-color: rgb(37, 37, 37);
+    width: 50px;
+    height: 50%;
+    border-bottom-right-radius: 15px;
+    border-top-right-radius: 15px;
+    z-index: 10;
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.719);
+}
+
+.Main-Links-Container{
+    width: 50%;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.Main-Links{
+    width: 80px;
+}
+
+.polygon-svg{
+    z-index: 12;
+    width: 40px;
+    height: 50px;
+    fill: #fff;
+    stroke: #f2f2f2;
+    stroke-miterlimit: 10;
+    stroke-width: 8px;
+}
+
+.Main-background-polygon{
+    width: 50%;
+    position: absolute;
+    transform: translate(-700px, -700px);
+    z-index: -1;
+}
+
+.Main-background-polygon-small{
+    position: absolute;
+    transform: translate(600px, -200px);
+    width: 30%;
+    z-index: 0;
+}
+
+h1{
+    font-size: 2.9vw;
+    font-family: monospace;
+    font-weight: 600;
+}
+
+p{
+    font-size: 2vh;
+    font-weight: 500;
+    text-align: center;
+}
+
+h2 {
+    font-size: 2vw;
+    font-family: monospace;
+    font-weight: 600;
+    text-align: center;
+}
+
+.text-accent{
+    color: rgb(121, 49, 255);
+}
+
+.text-border-outline{
+    border-style: solid;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-width: 3px;
+    border-color:rgb(121, 49, 255);
 }

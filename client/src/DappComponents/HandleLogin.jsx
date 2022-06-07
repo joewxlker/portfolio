@@ -5,40 +5,30 @@ import { useSetForm, useSetUserAddress, useAllUsers, useUserInfo } from './Messe
 
 const HandleLogin = () => {
 
+    const [bool, setBool] = useState(false);
     const [value, setForm] = useSetForm({ username: '' });
     const address = useSetUserAddress()
     const navigate = useNavigate()
     const token = localStorage.getItem('token');
     const allUsers = useAllUsers();
     const userInfo = useUserInfo();
-    console.log(allUsers)
-    console.log(userInfo)
-    console.log(address)
-    console.log(value.username)
-    // const username = userInfo[0];
-
-    // for (let v in allUsers) {
-    //     if (user[2] === allUsers) {
-    //         console.log(allUsers[v])
-    //     }
-    // }
-
-    // if (token === address[0]) {
-    //     navigate(`/Messenger/${address}`, { replace: true });
-    //     // redirects user to messenger if their key is already stored locally
-    // }
+    const username = userInfo;
     
+
+
     const login = async (event) => {
         event.preventDefault()
-        localStorage.setItem('token', `${address}`)
-        navigate(`/Messenger/${address}`, { replace: true });
-
-        // if (username !== value.username) {
-        //     console.log(false)
-        //     navigate(`/Login`)
-        // }
-        //stores users key locally and redirects to messenger
-    }
+        console.log(value.username, username)
+        if (value.username === username) {
+            
+            localStorage.setItem('username', `${username}`)
+            localStorage.setItem('address', `${address}`)
+            navigate(`/Messenger/${address}/${username}`, { replace: true });
+        } else {
+            navigate(`/Login`)
+            setBool(true);
+        }
+    };
 
     return (
         <>
@@ -47,6 +37,8 @@ const HandleLogin = () => {
                     <input name='username' value={value.username} onChange={setForm}>
                     </input>
                 </form>
+                
+                {bool ? (<p className='text-danger'> username incorrect </p>) : (<p>{console.log(bool)}</p>)}
             </div>
         </>
     );

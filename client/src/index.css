@@ -19,16 +19,17 @@ code {
 }
 
 #root{
+  height: 100%;
   margin: 0%;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.87), rgba(255, 0, 149, 0)),url(./Images/mainBkg.svg);
+  background: linear-gradient(180deg, rgba(6, 3, 7, 0.973), rgba(0, 0, 0, 0.137)),url(./Images/mainBkg.svg);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   background-color: aliceblue;
-  z-index: -3;
+  z-index: -10;
 }

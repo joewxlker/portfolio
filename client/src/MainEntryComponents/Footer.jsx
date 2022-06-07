@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import logoBlack from '../Images/PolygonBlack.svg'
 import solidity from '../Images/Solidity-Logo.wine.svg'
 import node from '../Images/Node.svg'
 import reactLogo from '../Images/logo192.png'

@@ -2,8 +2,8 @@
 import { useState, useEffect } from 'react'
 
 export const useSetForm = () => {
-    const [value, setForm] = useState('')
-    return [value, event => setForm({...value, [event.target.name] : event.target.value })]
+    const [value, setForm] = useState('') 
+    return [value, event => { setForm({ ...value, [event.target.name]: event.target.value }) }]
 }
 
 export const useSetUserAddress = () => {
@@ -20,7 +20,7 @@ export const useSetUserAddress = () => {
 }
 
 export const useAllUsers = () => {
-    const [allUsers, setAllUsers] = useState()
+    const [allUsers, setAllUsers] = useState([])
     useEffect(() => {
         const getAllUsers = async () => {
             await fetch('/api/allUsers', {
@@ -41,17 +41,26 @@ export const useUserInfo = () => {
     const address = useSetUserAddress();
     useEffect(() => {
         const getUserInfo = async () => {
-            console.log(address)
+            if(address === undefined){return}
             await fetch('/api/userInfo', {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ sender: address[0] })
             })
                 .then((res) => res.json())
-                .then((data) => setUserInfo(data.userInfo[0]))
+                .then((data) => { try { setUserInfo(data.userInfo[0]) } catch (err) { console.log(err)} })
         }
         getUserInfo();
-    }, [address])
+    }, [address, userInfo, setUserInfo])
 
     return userInfo
+}
+
+export const useSetActive = () => {
+
+    const [activeChat, setActiveChat, receiver, setReceiver] = useState();
+    const address = useSetUserAddress();
+    console.log(address, receiver)
+
+    return [activeChat, receiver ]
 }

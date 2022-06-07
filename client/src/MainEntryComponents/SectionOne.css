@@ -1,7 +1,8 @@
 .SectionOneMain{
     background-color: white;
-    height: 300px;
+    height: 50px;
     z-index: 1;
+    box-shadow: 0px 0px 100px 40px rgb(0, 0, 0);
 }
 
 .SectionOneLeft{
@@ -13,23 +14,35 @@
     z-index: 1;
 }
 .SectionOne-Cards{
-    background-color: white;
-    width: 50%;
+    /* background-color: rgb(51, 51, 51); */
+    width: 70%;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     align-items:center;
+    border-radius: 15px;
+    padding: 3%;
+    /* box-shadow: inset 0px 0px 100px 10px rgba(0, 0, 0, 0.719); */
 }
 
 .SectionOne-Card{
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
     margin: 3%;
     width: 40%;
-    height: 300px;
-    background: url(../Images/PolygonWhite.svg), linear-gradient(180deg, rgba(226, 202, 240, 0.534), rgba(214, 93, 164, 0)),url(../Images/PolygonWhite.svg);
-    background-size: cover;
+    height: 400px;
+    background-color: rgb(54, 54, 54);
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.719);
+    background-size: 500px 500px;
     background-position: center;
     border-radius: 15px;
     padding: 3%;
+}
+
+.SectionOne-Card-Svg{
+    width: 70%;
+    height: 40%;
+    text-align: center;
 }

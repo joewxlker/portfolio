@@ -1,0 +1,32 @@
+.PopupMessenger-Main-Flex{
+    background-color: aliceblue;
+    position: fixed;
+    display: flex;
+    bottom: 0;
+    z-index: 10;
+    right: 100px;
+}
+
+.PopupMessenger-Header-Closed{
+    height: 50px;
+    width: 100%;
+}
+.PopupMessenger-Header-Open{
+    height: 20px;
+    width: 100%;
+}
+
+.PopupMessenger-Message-History{
+    height: 300px;
+    width: 250px;
+}
+
+.PopupMessenger-Message-History-Closed{
+    height: 10px;
+    width: 100%;
+}
+
+#Popup-Open{
+    height: 500px;
+    background-color: aliceblue;
+}

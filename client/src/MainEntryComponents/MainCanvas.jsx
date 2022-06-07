@@ -20,25 +20,19 @@ class CanvasShapes extends React.Component {
             let randomNumY = Math.floor(Math.random() * 1000)
             let c = canvasRef.current
             let ctx = c.getContext('2d')
+            let ctx2 = c.getContext('2d')
             var path = new Path2D();
-            ctx.fillStyle = 'white';
+            var path2 = new Path2D();
+            ctx.fillStyle = 'rgb(37, 37, 37)';
             path.rect(randomNumX,randomNumY,randomNumY,randomNumX)
             ctx.fill(path);
+            ctx2.fillStyle = 'rgb(20, 20, 20)';
+            path2.rect(randomNumX, randomNumY, randomNumY, randomNumX);
+            ctx2.fill(path2);
+            ctx2.rotate(((2 * Math.PI) / 6) * randomNumX + ((2 * Math.PI) / 6000) * randomNumY);
 
             
         };
-
-        const drawShapes2 = async () => {
-            let randomNumX = Math.floor(Math.random() * 1000)
-            let randomNumY = Math.floor(Math.random() * 1000)
-            let c = canvasRef.current
-            let ctx = c.getContext('2d')
-            var path2 = new Path2D();
-            ctx.fillStyle = 'grey';
-            path2.rect(randomNumX, randomNumY, randomNumY, randomNumX);
-            ctx.fill(path2);
-            ctx.rotate(((2 * Math.PI) / 6) * randomNumX + ((2 * Math.PI) / 6000) * randomNumY);
-        }
 
         const deleteShapes = () => {
             let time = new Date();
@@ -53,19 +47,13 @@ class CanvasShapes extends React.Component {
         useEffect(() => {
             setInterval(() => {
                 drawShapes();
-            }, 1000)
-        });
-
-        useEffect(() => {
-            setInterval(() => {
-                drawShapes2();
-            }, 1000)
+            }, 500)
         });
  
         useEffect(() => {
             setInterval(() => {
                 deleteShapes();
-            }, 2000)
+            }, 500)
         });
 
 

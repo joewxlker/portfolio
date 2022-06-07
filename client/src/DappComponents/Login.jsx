@@ -20,13 +20,15 @@ export default class Login extends Component {
     render() {
         return (
             <Fragment>
+                <div className='bg-dark w-100 d-flex flex-column justify-content-center align-items-center'>
                 <header className='Login-Header'>
                     <ConnectButton />
                     <DisconnectButton/>
                     </header>
                 <div className='Login-Main'>
                     <HandleLogin/>
-                </div>
+                    </div>
+                    </div>
             </Fragment>
         );
     }
