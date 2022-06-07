@@ -13,7 +13,7 @@ const router = express.Router()
 
 // to interact with the blockchain using this source code you will need a node end point using the same network you wish to use 
 
-var wss = "wss://autumn-sparkling-resonance.bsc.quiknode.pro/2519c42cdc27be9ccf32638d0878ed819cd3cff7/"; 
+var wss = ""; 
 const web3 = new Web3(wss);
 const abi = [{"anonymous":false,"inputs":[{"indexed":true,"internalType":"string","name":"_username","type":"string"},{"indexed":true,"internalType":"uint256","name":"UserID","type":"uint256"},{"indexed":true,"internalType":"address","name":"UserAddress","type":"address"}],"name":"AccountCreated","type":"event"},{"inputs":[{"internalType":"address","name":"_receiver","type":"address"},{"internalType":"address","name":"_sender","type":"address"}],"name":"addFriend","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"_usernames","type":"string"},{"internalType":"address","name":"newUser","type":"address"}],"name":"createAccount","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_sender","type":"address"}],"name":"delChatActive","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"getAccountInfo","outputs":[{"internalType":"string","name":"","type":"string"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_sender","type":"address"}],"name":"getActiveChat","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getAllUsers","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"friend","type":"address"},{"internalType":"address","name":"friend2","type":"address"}],"name":"getChatCode","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"pure","type":"function"},{"inputs":[{"internalType":"address","name":"_sender","type":"address"}],"name":"getFriends","outputs":[{"components":[{"internalType":"address","name":"friend","type":"address"}],"internalType":"struct Messenger.friends[]","name":"","type":"tuple[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"friend_key","type":"bytes32"}],"name":"readMessage","outputs":[{"components":[{"internalType":"address","name":"reciever","type":"address"},{"internalType":"string","name":"_message","type":"string"}],"internalType":"struct Messenger.message[]","name":"","type":"tuple[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_sender","type":"address"},{"internalType":"address","name":"_receiver","type":"address"},{"internalType":"string","name":"_msg","type":"string"}],"name":"sendMessage","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_sender","type":"address"},{"internalType":"address","name":"_receiver","type":"address"}],"name":"setChatActive","outputs":[],"stateMutability":"nonpayable","type":"function"}]
 var contractAddress = "0x7aaD3D05c3095885a4585223081bE7237e97e4d8"; 
@@ -23,9 +23,9 @@ const networkId = web3.eth.net.getId();
 //for node to call function and send wei to the block chain it will require you to use your own wallet and wei to handle these transactions
 // multiple wallets allows for synchronous transactions without altering gas prices
 
-const secretKey = "8b299edbf9bffbc1833facc6a598d685ff485911e167d9bcb6e769e6db5a02c8" 
-const secretKeyTwo = "eca8312c14ba98f3b44ebf62faf74bed1d6697eda71f8d8b1e1009c184a66fcb"
-const address = "0x7831E194F6DF6f55f1aE56e6EDcbEE64E9e9F720"
+const secretKey = "" 
+const secretKeyTwo = ""
+const address = ""
 const addressTwo = "0xB00FFfD7F4aD21AC72b306B892e43f34466dF9Ce"
 
 
