@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 
 export const useSetForm = () => {
     const [value, setForm] = useState('') 
-    return [value, event => { setForm({ ...value, [event.target.name]: event.target.value }) }]
+    return [value, event => { event.preventDefault();  setForm({ ...value, [event.target.name]: event.target.value }) }]
 }
 
 export const useSetUserAddress = () => {
@@ -11,7 +11,7 @@ export const useSetUserAddress = () => {
     useEffect(() => {
         const requestAccount = async () => {
             let accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            let account = accounts
+            let account = accounts[0]
             setAddress(account)
         }
         requestAccount();
@@ -45,7 +45,7 @@ export const useUserInfo = () => {
             await fetch('/api/userInfo', {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ sender: address[0] })
+                body: JSON.stringify({ sender: address })
             })
                 .then((res) => res.json())
                 .then((data) => { try { setUserInfo(data.userInfo[0]) } catch (err) { console.log(err)} })
@@ -57,10 +57,38 @@ export const useUserInfo = () => {
 }
 
 export const useSetActive = () => {
-
-    const [activeChat, setActiveChat, receiver, setReceiver] = useState();
+    const [activeChat, setActiveChat] = useState();
     const address = useSetUserAddress();
-    console.log(address, receiver)
+    useEffect(() => {
+        const fetchActive = async () => {
+            await fetch('/api/activeChat', {
+                method: 'post',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ sender: address })
+            })
+                .then((res) => res.json())
+                .then((data) => setActiveChat(data.activeChat));
+        }
+        fetchActive();
+        console.log(address)
+        console.log(activeChat)
+    },[address])
+    return [activeChat]
 
-    return [activeChat, receiver ]
+}
+
+export const useSetFriendsArray = () => {
+
+    const [friends, setFriends] = useState();
+    const address = useSetUserAddress();
+    useEffect(() => {
+        fetch('/api/friendList', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sender: address })
+        })
+            .then((res) => res.json())
+            .then((data) => setFriends({ friends: data.friendList }))
+    }, [address])
+    return friends;
 }

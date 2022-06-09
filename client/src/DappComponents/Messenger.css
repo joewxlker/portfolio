@@ -83,3 +83,14 @@
     justify-content: center;
     align-items: center;
 }
+
+.Messenger-Users-Container {
+    scroll-behavior: smooth;
+    overflow:scroll;
+}
+
+.Messenger-Added-USers{
+    height: 50px;
+    overflow: hidden;
+    width: 95%;
+}

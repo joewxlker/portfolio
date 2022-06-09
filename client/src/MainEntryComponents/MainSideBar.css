@@ -1,0 +1,56 @@
+.MainSideBar-Settings-Container-Open{
+    width: 300px;
+    height: 450px;
+    background-color: rgb(44, 44, 44);
+    position: absolute;
+    transform: translateX(190px);
+    z-index: 20;
+    border-radius: 15px;
+    animation-name: openSettings;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-in-out;
+}
+  
+  @keyframes openSettings {
+    from {
+        width: 0%;
+        height: 450px;
+        transform: translateX(40px);
+    }
+    to {
+        height: 450px;
+        width: 300px;
+        transform: translateX(190px);
+    }
+  }
+
+  .MainSideBar-Settings-Container-Closed{
+    width: 0px;
+    height: 450px;
+    background-color: rgb(44, 44, 44);
+    position: absolute;
+    transform: translateX(0px);
+    border-radius: 15px;
+    animation-name: closeSettings;
+    animation-duration: 0.1s;
+    animation-timing-function: ease-in-out;
+    animation-delay: 0s;
+}
+@keyframes closeSettings {
+    to {
+        width: 0%;
+        height: 450px;
+        transform: translateX(40px);
+        z-index: 0;
+    }
+    from {
+        height: 450px;
+        width: 300px;
+        transform: translateX(190px);
+        z-index: 2;
+    }
+  }
+
+.polygon-svg{
+    cursor: pointer;
+}

@@ -1,38 +1,87 @@
 import React, { Component, Fragment } from 'react'
 import '../Messenger.css'
+import { useSetActive, useSetForm, useSetUserAddress } from '../MessengerHooks/setUserData';
 
-export default class HandleMediaContent extends Component {
+const HandleMessageHistory = () => {
 
-        constructor(props) {
-            super(props);
-            this.state = {
+    const [value, setForm] = useSetForm();
+    const address = useSetUserAddress();
+    const activeChat = useSetActive('');
 
-            }
-    }
-
-    handleChange = (event) => {
+    const sendMessage = async (event) => {
+        console.log(activeChat)
         event.preventDefault();
-        this.setState({ value: event.target.value})
+        console.log(address, activeChat, value.message)
+        await fetch('/api/sendMessage', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sender: address, receiver: activeChat[0], message: value.message })
+        })
+            .then((res) => res.json())
+            .then((data) => console.log(data))
     }
 
-    render() {
+    const RenderMessages = () => {
+        const getFriendCode = async () => {
+            let friendCode;
+            await fetch('/api/friendCode', {
+                method: 'post',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ sender: address, receiver: activeChat[0] })
+            })
+                .then((res) => res.json())
+                .then((data) => friendCode = data.friendCode)
+            return friendCode
+        }
+        const getMessages = async (friendCode) => {
+            let messages;
+            await fetch('/api/getMessages', {
+                method: 'post',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ friendCode: friendCode })
+            })
+                .then((res) => res.json())
+                .then((data) => messages = data.receivedMessages)
+            return messages
+        }
+        getFriendCode()
+            .then((friendCode) => getMessages(friendCode))
+            .then((messages) => console.log(messages));
+        return (
+            <div>
+            </div>
+        )
+    }
+
+    if (activeChat !== undefined) {
         return (
             <Fragment>
                 <header className='Messenger-Component-header'>
-
+                    messaging: {activeChat}
                 </header>
                 <div className='Messenger-message-history-body'>
-                    <div className='Messenger-text-body'>
-                        <h3>Message from ...</h3>
-                        <p>lajndalksdnmawmx</p>
-                    </div>
+                    <RenderMessages/>
                 </div>
                 <div className='Messenger-main-input'>
-                    <form className='w-100'>
-                        <input className='w-100' value={this.state.value} onChange={this.handleChange}></input>
+                    <form className='w-100' name='message' value={''} onSubmit={sendMessage}>
+                        <input className='w-100' name='message' value={value.message} onChange={setForm}></input>
                     </form>
                 </div>
             </Fragment>
         );
     }
-}
+    else return (
+        <>
+            <header className='Messenger-Component-header'>
+
+            </header>
+            <div className='Messenger-message-history-body'>
+                <div className='text-light w-100 h-100 d-flex flex-column justify-content-center align-items-center'>
+                    Please select a user to begin messaging
+                </div>
+            </div>
+        </>
+    );
+
+};
+export default HandleMessageHistory

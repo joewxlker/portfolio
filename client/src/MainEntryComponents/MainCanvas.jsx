@@ -5,17 +5,12 @@ import './Main.css'
 
 class CanvasShapes extends React.Component {
 
-    
-    constructor(props) {
-        super(props);
-    }
-
     DrawShapes = () => {
 
         const canvasRef = React.createRef();
         const imgRef = React.createRef();
 
-        const drawShapes = async () => {
+        const drawShapes = () => {
             let randomNumX = Math.floor(Math.random() * 1000)
             let randomNumY = Math.floor(Math.random() * 1000)
             let c = canvasRef.current
@@ -23,6 +18,7 @@ class CanvasShapes extends React.Component {
             let ctx2 = c.getContext('2d')
             var path = new Path2D();
             var path2 = new Path2D();
+            if(c === null) return
             ctx.fillStyle = 'rgb(37, 37, 37)';
             path.rect(randomNumX,randomNumY,randomNumY,randomNumX)
             ctx.fill(path);
@@ -30,12 +26,9 @@ class CanvasShapes extends React.Component {
             path2.rect(randomNumX, randomNumY, randomNumY, randomNumX);
             ctx2.fill(path2);
             ctx2.rotate(((2 * Math.PI) / 6) * randomNumX + ((2 * Math.PI) / 6000) * randomNumY);
-
-            
         };
 
         const deleteShapes = () => {
-            let time = new Date();
             let c = canvasRef.current
             let ctx = c.getContext('2d')
             let path3 = new Path2D();
@@ -61,7 +54,7 @@ class CanvasShapes extends React.Component {
 
         return (
             <Fragment>
-                <canvas id='main-canvas' className='main-Canvas' ref={canvasRef} height={'800px'} width={'2000px'} b>
+                <canvas id='main-canvas' className='main-Canvas' ref={canvasRef} height={'1000px'} width={'2000px'}>
                     <svg className='main-canvasSvg' src={polygon} alt='polygon' ref={imgRef} /> 
                 </canvas>
             </Fragment>
