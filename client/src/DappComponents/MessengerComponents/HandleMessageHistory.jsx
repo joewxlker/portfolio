@@ -15,10 +15,10 @@ const HandleMessageHistory = () => {
         await fetch('/api/sendMessage', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ sender: address, receiver: activeChat[0], message: value.message })
+            body: JSON.stringify({ sender: address, receiver: activeChat, message: value.message })
         })
             .then((res) => res.json())
-            .then((data) => console.log(data))
+            .then((data) => alert(JSON.stringify(data)))
     }
 
     const RenderMessages = () => {

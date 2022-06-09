@@ -80,6 +80,7 @@ export const useSetActive = () => {
 export const useSetFriendsArray = () => {
 
     const [friends, setFriends] = useState();
+    const [reverted, setReverted] = useState();
     const address = useSetUserAddress();
     useEffect(() => {
         fetch('/api/friendList', {
@@ -88,7 +89,16 @@ export const useSetFriendsArray = () => {
             body: JSON.stringify({ sender: address })
         })
             .then((res) => res.json())
-            .then((data) => setFriends({ friends: data.friendList }))
-    }, [address])
-    return friends;
+            .then((data) => {
+                console.log(data)
+                if (data.data === 'revert') setReverted({ reverted: true });
+                else {
+                    setFriends({ friends: data })
+                    .then(setReverted({ reverted: false }))
+                }
+            });
+        console.log(reverted)
+        console.log(friends)
+    }, [friends])
+    return [friends, reverted];
 }
