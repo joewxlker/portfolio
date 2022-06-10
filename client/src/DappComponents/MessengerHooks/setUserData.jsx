@@ -8,29 +8,34 @@ export const useSetForm = () => {
 
 export const useSetUserAddress = () => {
     const [address, setAddress] = useState('')
+
+    const requestAccount = async () => {
+        let accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        let account = accounts[0]
+        return account;
+    }
+
     useEffect(() => {
-        const requestAccount = async () => {
-            let accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            let account = accounts[0]
-            setAddress(account)
-        }
-        requestAccount();
-    }, [setAddress])
+        console.log('account Hook', address)
+        requestAccount().then((account) => setAddress(account));
+    }, [address])
     return address
 }
 
 export const useAllUsers = () => {
-    const [allUsers, setAllUsers] = useState([])
+    const [allUsers, setAllUsers] = useState()
+
+    const getAllUsers = async () => {
+        await fetch('/api/allUsers', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 'null': 'null'})
+        })
+            .then((res) => res.json())
+            .then((data) => setAllUsers(data));
+    };
+
     useEffect(() => {
-        const getAllUsers = async () => {
-            await fetch('/api/allUsers', {
-                method: 'post',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 'null': 'null'})
-            })
-                .then((res) => res.json())
-                .then((data) => setAllUsers(data));
-        };
         getAllUsers();
     },[])
     return allUsers;
@@ -39,17 +44,19 @@ export const useAllUsers = () => {
 export const useUserInfo = () => {
     const [userInfo, setUserInfo] = useState();
     const address = useSetUserAddress();
+
+    const getUserInfo = async () => {
+        if(address === undefined){return}
+        await fetch('/api/userInfo', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sender: address })
+        })
+            .then((res) => res.json())
+            .then((data) => { try { setUserInfo(data.userInfo);} catch (err) { console.log(err, data)} })
+    }
+
     useEffect(() => {
-        const getUserInfo = async () => {
-            if(address === undefined){return}
-            await fetch('/api/userInfo', {
-                method: 'post',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ sender: address })
-            })
-                .then((res) => res.json())
-                .then((data) => { try { setUserInfo(data.userInfo[0]) } catch (err) { console.log(err)} })
-        }
         getUserInfo();
     }, [address, userInfo, setUserInfo])
 
@@ -59,19 +66,20 @@ export const useUserInfo = () => {
 export const useSetActive = () => {
     const [activeChat, setActiveChat] = useState();
     const address = useSetUserAddress();
+
+    const fetchActive = async () => {
+        console.log('dis working ser?')
+        await fetch('/api/activeChat', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sender: address })
+        })
+            .then((res) => res.json())
+            .then((data) => setActiveChat(data.activeChat));
+    }
+    
     useEffect(() => {
-        const fetchActive = async () => {
-            await fetch('/api/activeChat', {
-                method: 'post',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ sender: address })
-            })
-                .then((res) => res.json())
-                .then((data) => setActiveChat(data.activeChat));
-        }
         fetchActive();
-        console.log(address)
-        console.log(activeChat)
     },[address])
     return [activeChat]
 
@@ -80,9 +88,9 @@ export const useSetActive = () => {
 export const useSetFriendsArray = () => {
 
     const [friends, setFriends] = useState();
-    const [reverted, setReverted] = useState();
     const address = useSetUserAddress();
-    useEffect(() => {
+
+    const fetchFriends = () => {
         fetch('/api/friendList', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
@@ -90,15 +98,54 @@ export const useSetFriendsArray = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data)
-                if (data.data === 'revert') setReverted({ reverted: true });
-                else {
-                    setFriends({ friends: data })
-                    .then(setReverted({ reverted: false }))
+                try { setFriends(data);
+                    console.log(data)
                 }
+                    catch (err){console.log(err)}
             });
-        console.log(reverted)
+    }
+    useEffect(() => {
+        fetchFriends();
         console.log(friends)
-    }, [friends])
-    return [friends, reverted];
+    }, [])
+
+    return [address];
+}
+
+export const useCheckExists = () => {
+
+    const [exists, setExists] = useState(false);
+    const address = useSetUserAddress('');
+
+    const filterArr = (data) => {
+        let accounts = data.allUsers
+        let account = address;
+        let lowerCase = account.toLowerCase();
+        for (let v in accounts) {
+            let _account = accounts[v]
+            let _lowerCase = _account.toLowerCase();
+            if (lowerCase === _lowerCase) {
+                setExists(true)
+                break
+            }
+            else setExists(false)
+        }
+    };
+
+    const checkIfUserExists = () => {
+        fetch('/api/allUSers', {
+            method: 'post',
+            headers: { 'Data-Type': 'applications/json' },
+            body: JSON.stringify({ null: null })
+        })
+            .then((res) => res.json())
+            .then((data) => { filterArr(data)})
+    };
+
+    useEffect(() => {
+        checkIfUserExists();
+        console.log(exists)
+    }, [address])
+
+    return exists;
 }

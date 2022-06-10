@@ -1,13 +1,15 @@
 import React, { useState, createContext, useEffect, Fragment } from 'react';
 import {useNavigate} from 'react-router-dom';
 import './Login.css'
-import { useSetForm, useSetUserAddress, useAllUsers, useUserInfo,  /*useSetActive*/ useSetFriendsArray  } from './MessengerHooks/setUserData';
+import { useSetForm, useSetUserAddress, useAllUsers, useUserInfo,  /*useSetActive*/ useSetFriendsArray, useCheckExists  } from './MessengerHooks/setUserData';
 
 const HandleLogin = () => {
 
     const [bool, setBool] = useState(false);
     const [value, setForm] = useSetForm({ username: '' });
     const [reverted] = useSetFriendsArray();
+    const [loading, setLoading] = useState(true)
+    const exists = useCheckExists();
     // const activeChat = useSetActive()
     //getallfriends hook
     const address = useSetUserAddress()
@@ -15,9 +17,32 @@ const HandleLogin = () => {
     const token = localStorage.getItem('token');
     const allUsers = useAllUsers();
     const userInfo = useUserInfo();
-    const username = userInfo;
 
-    const login = async (event) => {
+    useEffect(() => {
+        setTimeout(() => setLoading(false), 1000)
+        setTimeout(() => setLoading(true));
+        //load page
+    }, [])
+
+    const TimeOut = () => {
+        if (loading) {
+
+            return (
+                <div className='HandleLogin-loading-page bg-dark justify-content-center align-items-center'>
+                   <h1 className='text-light'>Loading...</h1>
+                </div>
+            )
+        }
+        else {
+            return (
+                <></>
+            )
+        }
+    }
+
+    const login = async (event, data) => {
+        if(userInfo === undefined) { return }
+        let username = userInfo[0]
         event.preventDefault()
         console.log(username)
         if (value.username === username) {
@@ -27,6 +52,7 @@ const HandleLogin = () => {
         } else {
             navigate(`/Login`)
             setBool(true)
+            window.location.reload(false);
         }
     };
 
@@ -39,34 +65,39 @@ const HandleLogin = () => {
             body: JSON.stringify({ sender: address, username: value.username })
         })
             .then((res) => res.json())
-            .then((data) => console.log(data));
+            .then((data) => login(event, data));
     }
 
-    if (reverted) {
-        console.log(reverted)
+    if (exists) {
         return (
-            < div className='Login-Form' >
-                <form onSubmit={login}>
-                    <input name='username' value={value.username} onChange={setForm}>
-                    </input>
-                </form>
-                {bool ? (<p className='text-danger'> username incorrect </p>) : (<p></p>)}
-            </div>
-        )
+            <>
+                < div className='Login-Form' >
+                    <form className='w-100' onSubmit={login}>
+                        <input className='w-100' name='username' value={value.username} onChange={setForm}>
+                        </input>
+                    </form>
+                    {bool ? (<p className='text-danger'> username incorrect </p>) : (<p></p>)}
+                </div>
+                <TimeOut />
+            </>
+        );
     }
     else {
         return (
-            <div className='d-flex flex-column justify-content-center align-items-center'>
-                <h1>Create Account</h1>
-                < div className='Login-Form d-flex flex-row' >
-                    <h3>Username: </h3>
-                <form onSubmit={createAccount}>
-                    <input name='username' value={value.username} onChange={setForm}>
-                    </input>
-                </form>
-            </div>
-        </div>
-        )
+            <>
+                <div className='d-flex flex-column justify-content-center align-items-center'>
+                    <h1>Create Account</h1>
+                    < div className='Login-Form d-flex flex-row' >
+                        <h3>Username: </h3>
+                        <form className='w-100' onSubmit={createAccount}>
+                            <input className='w-100' name='username' value={value.username} onChange={setForm}>
+                            </input>
+                        </form>
+                    </div>
+                </div>
+                <TimeOut />
+            </>
+        );
     };
 };
 

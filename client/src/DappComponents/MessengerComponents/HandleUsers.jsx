@@ -6,19 +6,19 @@ import { useSetForm, useAllUsers, useSetActive, useSetFriendsArray, useUserInfo,
 
 const HandleUsers = () => {
 
-    // const [execute, setExecute] = useState();
-    const [value, setForm] = useSetForm({ userSearch: '' });
-    const address = useSetUserAddress('');
-    const activeChat = useSetActive();
-    const friends = useSetFriendsArray('');
-    const allUsers = useAllUsers();
-    const userArray = allUsers.allUsers;
-    const ReceiverContext = createContext();
-
+    const [loading, setLoading] = useState(false); // sets loading true before making requests to solidty | sets false once the txn is complete
+    const [value, setForm] = useSetForm({ userSearch: '' }); // handles user search input
+    const address = useSetUserAddress(''); // gets the connected wallets address 
+    const activeChat = useSetActive(); // gets the active chat | selected receiver user
+    const friends = useSetFriendsArray(); // returns friend array
+    const allUsers = useAllUsers(); // returns all users array
+    const userArray = allUsers;
 
     const addFriend = async () => {
+
         let receiver = value.userSearch.toLowerCase();
         let _address = address.toLowerCase();
+        //case sensitive input handling
         if (receiver === _address) return console.log('attempted to add self');
         await fetch('/api/addFriend', {
             method: 'post',
@@ -27,58 +27,80 @@ const HandleUsers = () => {
         })
             .then((res) => res.json())
             .then((data) => alert(JSON.stringify(data)))
-            .then(event => setActive(event, receiver))
+             // response data will either be a txnHash on successful transaction
+             //indicating the friend has been added successfully... or it will
+             //contain some sort of error, null, reverted etc.
+            .then(() => setActive(receiver))
     }
 
     const FindUserButton = () => {
-        for (let v in userArray) {
-            if (userArray[v] === value.userSearch) {
+        if (userArray === undefined) { return }; //hook calls return undefined on firt render
+        for (let v in userArray.allUsers) {
+            //for loop filters through all users array and determines if input matches smart contract memory
+            //if not does nothing
+            if (userArray.allUsers[v] === value.userSearch) {
                 return (
                     <div className='Messenger-add-user' onClick={addFriend}>{value.userSearch}</div>
                 )
-            }
+            }//renders a button which allows users to add the user if they exist in the db
         }
     };
 
     const setActive = async (event, props) => {
+        if (props === undefined) { return } else if (address === undefined) { return }; // Hook calls return undefined on first render
         event.preventDefault();
-        console.log('setting active')
-        console.log(props, address)
         await fetch('/api/setActive', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ sender: address, receiver: props })
         })
             .then((res) => res.json())
-            .then((data) => alert(JSON.stringify(data)))
+            .then((data) => { alert(JSON.stringify(data))}) // alerts user that the transaction has succeeded, displays transaction hash
     }
 
-    const LoadFriends = () => {
-        if (friends.friendList === undefined) {
+    const LoadFriends = () => { //render friends list conditionally based on loading, 
+        if (friends === undefined) {// Users cannot attempt to add friends whilst existing transaction are pending
             return (
                 <>
-                    <div className='d-flex flex-column justify-content-center align-items-center h-100'> u got no frands </div>
+                    {loading ? (
+                        <div className='d-flex flex-column justify-content-center align-items-center h-100'> u got no frands </div>
+                    ) : (
+                        <div className='d-flex flex-column justify-content-center align-items-center h-100'> u got no frands </div>
+                    )}
+                    
                 </>
             );
-            } else
-                return (
-                    <>
+        } else
+            return (
+                <>
+                    {!loading ? (
                         <div>
-                            {friends[0].friends.friendList.map((some) => {
+                            {friends.map((some) => {
                                 return (
-                                    <button className='Messenger-Added-USers m-2 bg-light text-dark btn' onClick={event => setActive(event, some[0])}>{some}</button>
+                                    <button className='Messenger-Added-USers m-2 bg-light text-dark btn' onClick={event => setActive(event, some)}>{some}</button>
                                 )
                             })}
                         </div>
-                    </>
-                );
+                    ) : (
+                        <div>
+                            {friends.map((some) => {
+                                return (
+                                    <div>setting active</div>
+                                )
+                            })}
+                        </div>
+                    )}
+                    
+                </>
+
+            );
     }
 
 
     return (
         <Fragment>
             <header className='Messenger-Component-header'>
-                <input
+                <input //handles user input
                     className='w-75 h-50'
                     name='userSearch'
                     value={value.userSearch}
@@ -87,6 +109,7 @@ const HandleUsers = () => {
                 </input>
             </header>
             <div className='Messenger-Users-Container bg-light w-100 h-100'>
+                {/* //render user button and friends */}
                 <FindUserButton />
                 <LoadFriends />
             </div>
