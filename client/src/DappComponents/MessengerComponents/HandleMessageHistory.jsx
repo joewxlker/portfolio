@@ -12,72 +12,66 @@ const HandleMessageHistory = () => {
     const address = useSetUserAddress();
     const activeChat = useSetActive();
 
-          
+    const testFunc = () => {
+        if (address === undefined) { return };
+        if (activeChat[0] === undefined) { return };
+        getFriendCode();
+        if (friendCode === undefined) { return };
+        getMessages();
+    };
+    
     const getFriendCode = async () => {
-        if (address === undefined) { return } else if (activeChat[0] === undefined) { return }
-        else {
-            setTimeout(() => {
                 fetch('/api/friendCode', {
                     method: 'post',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ sender: address, receiver: activeChat[0] })
                 })
                     .then((res) => res.json())
-                    .then((data) => setFriendCode(data.friendCode))
-            }, 5000);
-        }
+                    .then((data) => setFriendCode(data))
     }
     
     const getMessages = async () => {
-            if (friendCode === undefined) { return } else if (address === undefined) { return } else if (activeChat === undefined) { return }
-            else {
-                setTimeout(() => {
-                    fetch('/api/getMessages', {
-                        method: 'post',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ friendCode: friendCode })
-                    })
-                        .then((res) => res.json())
-                        .then((data) => { setMessages(data) })
-                }, 5000);
-            }
-        }
-    getFriendCode()
-        .then((friendCode) => getMessages(friendCode));
+        if (friendCode === undefined) { return };
+        fetch('/api/getMessages', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ friendCode: friendCode })
+        })
+            .then((res) => res.json())
+            .then((data) => setMessages(data))
+    };
 
     const sendMessage = async (event) => {
-        if (address === undefined) { return } else if (activeChat === undefined) { return } else if (value.message === '') { return }
-        else {
-            // setMessageLoading(true);
-            event.preventDefault();
-            console.log(address, activeChat[0], value.message)
-            await fetch('/api/sendMessage', {
-                method: 'post',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ sender: address, receiver: activeChat[0], message: value.message })
-            })
-                .then((res) => res.json())
-                .then((data) => { alert(JSON.stringify(data))})
+        if (address === undefined) { return };
+        if (activeChat[0] === undefined) { return };
+        if (value.message === '') { return };
+        event.preventDefault();
+        await fetch('/api/sendMessage', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sender: address, receiver: activeChat[0], message: value.message })
+        })
+            .then((res) => res.json())
+            .then((data) => { alert(JSON.stringify(data)) })
 
-        }
-    }
+    };
 
-    console.log('hello: ', messages, activeChat[0],)
     const RenderMessages = () => {
-        if (messages === undefined) { return <div>yoo</div> };
+        if (messages === undefined) { return <button className='w-100 btn text-light bg-dark' onClick={testFunc}>refresh</button>};
+        console.log(messages)
         return (
             <>
+                <button className='w-100 btn text-light bg-dark' onClick={testFunc}>refresh</button>
                 {/* {loading ? ( */}
+                
                     <div className='m-2 text-light'>
                         {messages.receivedMessages.map((message) => {
                             return (
                                 <>
-                                    {message}
-                                    {/* {message.map((msg) => {
-                                        <div>
-                                            {msg}
+                                    <div className='bg-light m-3 text-dark p-2 badge d-flex flex-column justify-content-start'>
+                                    <div className='text-dark'>sent from: {message[0]}</div>
+                                        <div className='text-dark'>{message[1]}</div>
                                         </div>
-                                    })} */}
                                 </> 
                             )
                         })}
@@ -92,7 +86,6 @@ const HandleMessageHistory = () => {
             </>
         )
     };
-    console.log(activeChat)
     if (activeChat[0] !== undefined) {
         return (
             <Fragment>

@@ -8,6 +8,7 @@ const HandleUsers = () => {
 
     const [loading, setLoading] = useState(false); // sets loading true before making requests to solidty | sets false once the txn is complete
     const [value, setForm] = useSetForm({ userSearch: '' }); // handles user search input
+    const [friend, setFriend] = useState('');
     const address = useSetUserAddress(''); // gets the connected wallets address 
     const activeChat = useSetActive(); // gets the active chat | selected receiver user
     const friends = useSetFriendsArray(); // returns friend array
@@ -58,43 +59,53 @@ const HandleUsers = () => {
             .then((data) => { alert(JSON.stringify(data))}) // alerts user that the transaction has succeeded, displays transaction hash
     }
 
-    const LoadFriends = () => { //render friends list conditionally based on loading, 
-        if (friends === undefined) {// Users cannot attempt to add friends whilst existing transaction are pending
-            return (
-                <>
-                    {loading ? (
-                        <div className='d-flex flex-column justify-content-center align-items-center h-100'> u got no frands </div>
-                    ) : (
-                        <div className='d-flex flex-column justify-content-center align-items-center h-100'> u got no frands </div>
-                    )}
-                    
-                </>
-            );
-        } else
-            return (
-                <>
-                    {!loading ? (
-                        <div>
-                            {friends.map((some) => {
-                                return (
-                                    <button className='Messenger-Added-USers m-2 bg-light text-dark btn' onClick={event => setActive(event, some)}>{some}</button>
-                                )
-                            })}
-                        </div>
-                    ) : (
-                        <div>
-                            {friends.map((some) => {
-                                return (
-                                    <div>setting active</div>
-                                )
-                            })}
-                        </div>
-                    )}
-                    
-                </>
-
-            );
+    const NoFriends = () => {
+        if(friends === undefined)
+        return (
+        <>
+        {loading ? (
+            <div className='d-flex flex-column justify-content-center align-items-center h-100'> u got no frands </div>
+        ) : (
+            <div className='d-flex flex-column justify-content-center align-items-center h-100'> u got no frands </div>
+        )}
+    </>
+            )
     }
+    
+    const PreLoadFriends = () => {
+        let friend;
+        if (friends === undefined) { return }
+        for (let v in friends) {
+            friend = friends[v]
+        }
+        if (friend !== undefined) return (
+        <>
+            {!loading ? (
+                <div>
+                    {friend.map((friends) => { //friend.map is return the connected user address instead of friends...
+                        return (             //see MessengerHooks/setUserData.jsx useSetFriendArray...
+                            <button className='Messenger-Added-USers m-2 bg-light text-dark btn' onClick={event => setActive(event, friends[0])}>{friends}</button>
+                        )
+                    })}
+                </div>
+            ) : ( // returns this while loading, Users cannot send multiple set active requests while pending
+                <div>
+                    <div>setting active</div>
+                </div>
+            )}
+            
+        </>
+        )
+    }
+
+    const LoadFriends = () => { //render friends list conditionally based on loading, 
+        return (
+            <>
+                <NoFriends />
+                <PreLoadFriends />
+            </>
+        )
+    };
 
 
     return (

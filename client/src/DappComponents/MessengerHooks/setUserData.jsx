@@ -16,7 +16,6 @@ export const useSetUserAddress = () => {
     }
 
     useEffect(() => {
-        console.log('account Hook', address)
         requestAccount().then((account) => setAddress(account));
     }, [address])
     return address
@@ -68,7 +67,6 @@ export const useSetActive = () => {
     const address = useSetUserAddress();
 
     const fetchActive = async () => {
-        console.log('dis working ser?')
         await fetch('/api/activeChat', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
@@ -98,18 +96,16 @@ export const useSetFriendsArray = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                try { setFriends(data);
-                    console.log(data)
-                }
-                    catch (err){console.log(err)}
+                try { setFriends(data.friendList);
+                }catch (err){console.log(err)}
             });
     }
     useEffect(() => {
         fetchFriends();
         console.log(friends)
-    }, [])
+    }, [address])
 
-    return [address];
+    return [friends];
 }
 
 export const useCheckExists = () => {

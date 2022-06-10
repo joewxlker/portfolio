@@ -7,15 +7,10 @@ const HandleLogin = () => {
 
     const [bool, setBool] = useState(false);
     const [value, setForm] = useSetForm({ username: '' });
-    const [reverted] = useSetFriendsArray();
     const [loading, setLoading] = useState(true)
     const exists = useCheckExists();
-    // const activeChat = useSetActive()
-    //getallfriends hook
     const address = useSetUserAddress()
     const navigate = useNavigate()
-    const token = localStorage.getItem('token');
-    const allUsers = useAllUsers();
     const userInfo = useUserInfo();
 
     useEffect(() => {
@@ -25,24 +20,18 @@ const HandleLogin = () => {
     }, [])
 
     const TimeOut = () => {
-        if (loading) {
-
-            return (
+        if (loading) {return (
                 <div className='HandleLogin-loading-page bg-dark justify-content-center align-items-center'>
                    <h1 className='text-light'>Loading...</h1>
                 </div>
             )
-        }
-        else {
-            return (
-                <></>
-            )
-        }
+        } else {return (<></>)}
     }
 
     const login = async (event, data) => {
         if(userInfo === undefined) { return }
         let username = userInfo[0]
+        console.log(username)
         event.preventDefault()
         console.log(username)
         if (value.username === username) {
@@ -50,9 +39,9 @@ const HandleLogin = () => {
             localStorage.setItem('address', `${address}`)
             navigate(`/Messenger/${address}/${username}`, { replace: true })
         } else {
-            navigate(`/Login`)
+            if(bool === undefined) {return}
             setBool(true)
-            window.location.reload(false);
+            localStorage.setItem('bool', `${bool}`)
         }
     };
 
@@ -71,7 +60,8 @@ const HandleLogin = () => {
     if (exists) {
         return (
             <>
-                < div className='Login-Form' >
+                <div className='Login-Form' >
+                <h1 className='text-accent'>Login</h1>
                     <form className='w-100' onSubmit={login}>
                         <input className='w-100' name='username' value={value.username} onChange={setForm}>
                         </input>
@@ -84,6 +74,7 @@ const HandleLogin = () => {
     }
     else {
         return (
+            
             <>
                 <div className='d-flex flex-column justify-content-center align-items-center'>
                     <h1>Create Account</h1>
@@ -97,6 +88,7 @@ const HandleLogin = () => {
                 </div>
                 <TimeOut />
             </>
+            
         );
     };
 };
