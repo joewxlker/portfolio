@@ -65,9 +65,12 @@ app.post('/api/allUsers', async (_req, res) => {
 });
 
 app.post('/api/userInfo', async (req, res) => {
+    let sender = req.body.sender;
+    if (sender=== undefined) { return console.log('invalid sender@userinfo') }
+    else if (sender === '') { return console.log('invalid sender@userInfo') }
     try {
         let userInfo: Array<string>;
-        await myContract.methods.getAccountInfo(req.body.sender).call((_err, response) => {
+        await myContract.methods.getAccountInfo(sender).call((_err, response) => {
             userInfo = response
         })
         res.send({ userInfo: userInfo })
@@ -80,6 +83,10 @@ app.post('/api/friendCode', async (req, res) => {
     let sender = req.body.sender;
     let receiver = req.body.receiver;
     let friendCode: string;
+    if (sender=== undefined) { return console.log('invalid sender@friendCode') }
+    else if (sender === '') { return console.log('invalid sender@friendCode') }
+    if (receiver=== undefined) { return console.log('invalid receiver@friendCode') }
+    else if (receiver=== '') { return console.log('invalid receiver@friendCode') }
     try {
 
         await myContract.methods.getChatCode(sender, receiver).call((req, res) => {
@@ -131,6 +138,8 @@ app.post('/api/getMessages', async (req, res) => {
 app.post('/api/activeChat', async (req, res) => {
     let sender = req.body.sender;
     let activeChat; 
+    if (sender=== undefined) { return console.log('invalid sender@activeChat') }
+    else if (sender === '') { return console.log('invalid sender@activeChat') }
     try {
         await myContract.methods.getActiveChat(sender).call((_err, response) => {
             console.log('activeChat: ',response)
@@ -249,46 +258,25 @@ app.post('/api/setActive', async (req, res) => {
     }
 });
 
-app.post('/api/sendMessage', async (req, res) => {
-    let sender = req.body.sender
-    let receiver = req.body.receiver
-    let message = req.body.message
-    if (sender === undefined) { console.log('invalid senderAddress@/sendMessage') }
-    else if (sender === '') { console.log('invalid senderAddress@/sendMessage') }
-    else if (receiver === undefined) { console.log('invalid receiverAddress@/sendMessage') }
-    else if (receiver === '') { console.log('invalid receiverAddress@/sendMessage') }
-    else if (message === undefined) { console.log('invalid message@/sendMessage') }
-    else if (message === '') { console.log('invalid message@/sendMessage') }
-    else {
-        try {
-            let tx = myContract.methods.sendMessage(sender, receiver, message)
-            let gas = await tx.estimateGas({ from: addressTwo });
-            let gasPrice = await web3.eth.getGasPrice();
-            let data = tx.encodeABI();
-            let nonce = await web3.eth.getTransactionCount(addressTwo)
-
-            let signedTx = await web3.eth.accounts.signTransaction({
-                to: contractAddress,
-                data: data,
-                gas: gas,
-                gasPrice: gasPrice,
-                nonce: nonce,
-                chainId: networkId,
-            }, secretKeyTwo,
-            )
-            let receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction)
-            console.log(`transaction hash: ${receipt.transactionHash}`)
-            res.send({ txnHash: `transaction hash: ${receipt.transactionHash}` })
-        }
-        catch (err) {
-            console.log(err)
+setTimeout(() => {
+    app.post('/api/sendMessage', async (req, res) => {
+        let sender = req.body.sender
+        let receiver = req.body.receiver
+        let message = req.body.message
+        if (sender === undefined) { console.log('invalid senderAddress@/sendMessage') }
+        else if (sender === '') { console.log('invalid senderAddress@/sendMessage') }
+        else if (receiver === undefined) { console.log('invalid receiverAddress@/sendMessage') }
+        else if (receiver === '') { console.log('invalid receiverAddress@/sendMessage') }
+        else if (message === undefined) { console.log('invalid message@/sendMessage') }
+        else if (message === '') { console.log('invalid message@/sendMessage') }
+        else {
             try {
                 let tx = myContract.methods.sendMessage(sender, receiver, message)
-                let gas = await tx.estimateGas({ from: address });
+                let gas = await tx.estimateGas({ from: addressTwo });
                 let gasPrice = await web3.eth.getGasPrice();
                 let data = tx.encodeABI();
-                let nonce = await web3.eth.getTransactionCount(address)
-    
+                let nonce = await web3.eth.getTransactionCount(addressTwo)
+
                 let signedTx = await web3.eth.accounts.signTransaction({
                     to: contractAddress,
                     data: data,
@@ -296,17 +284,39 @@ app.post('/api/sendMessage', async (req, res) => {
                     gasPrice: gasPrice,
                     nonce: nonce,
                     chainId: networkId,
-                }, secretKey,
+                }, secretKeyTwo,
                 )
                 let receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction)
                 console.log(`transaction hash: ${receipt.transactionHash}`)
                 res.send({ txnHash: `transaction hash: ${receipt.transactionHash}` })
             }
-            catch (err) { console.log(err);  res.send(err)}
-        }
-    };
-})
-
+            catch (err) {
+                console.log(err)
+                try {
+                    let tx = myContract.methods.sendMessage(sender, receiver, message)
+                    let gas = await tx.estimateGas({ from: address });
+                    let gasPrice = await web3.eth.getGasPrice();
+                    let data = tx.encodeABI();
+                    let nonce = await web3.eth.getTransactionCount(address)
+    
+                    let signedTx = await web3.eth.accounts.signTransaction({
+                        to: contractAddress,
+                        data: data,
+                        gas: gas,
+                        gasPrice: gasPrice,
+                        nonce: nonce,
+                        chainId: networkId,
+                    }, secretKey,
+                    )
+                    let receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction)
+                    console.log(`transaction hash: ${receipt.transactionHash}`)
+                    res.send({ txnHash: `transaction hash: ${receipt.transactionHash}` })
+                }
+                catch (err) { console.log(err); res.send(err) }
+            }
+        };
+    })
+}, 5000);
 
 //--------------------------------------------------------------------------------------->ROUTING<------------------------------------------------------------------------------------
 // var options = {

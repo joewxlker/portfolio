@@ -1,71 +1,42 @@
 import React, { Component, Fragment, useState } from 'react'
+import { useEffect } from 'react';
 import '../Messenger.css'
-import { useSetActive, useSetForm, useSetUserAddress } from '../MessengerHooks/setUserData';
+import { useGetMessages, useSetActive, useSetForm, useSetUserAddress } from '../MessengerHooks/setUserData';
 
 const HandleMessageHistory = () => {
 
-    const [messages, setMessages] = useState();
-    const [loading, setLoading] = useState(false);
-    const [friendCode, setFriendCode] = useState();
-    // const [messageLoading, setMessageLoading] = useState(false);
+    
     const [value, setForm] = useSetForm();
+    const [loading, setLoading] = useState(false);
+    const messages = useGetMessages();
     const address = useSetUserAddress();
     const activeChat = useSetActive();
 
-    const testFunc = () => {
-        if (address === undefined) { return };
-        if (activeChat[0] === undefined) { return };
-        getFriendCode();
-        if (friendCode === undefined) { return };
-        getMessages();
-    };
-    
-    const getFriendCode = async () => {
-                fetch('/api/friendCode', {
-                    method: 'post',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ sender: address, receiver: activeChat[0] })
-                })
-                    .then((res) => res.json())
-                    .then((data) => setFriendCode(data))
-    }
-    
-    const getMessages = async () => {
-        if (friendCode === undefined) { return };
-        fetch('/api/getMessages', {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ friendCode: friendCode })
-        })
-            .then((res) => res.json())
-            .then((data) => setMessages(data))
-    };
+    let _messages = messages;
 
     const sendMessage = async (event) => {
-        if (address === undefined) { return };
-        if (activeChat[0] === undefined) { return };
-        if (value.message === '') { return };
         event.preventDefault();
+        setLoading(true)
         await fetch('/api/sendMessage', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ sender: address, receiver: activeChat[0], message: value.message })
+            body: JSON.stringify({ sender: address, receiver: activeChat, message: value.message })
         })
             .then((res) => res.json())
-            .then((data) => { alert(JSON.stringify(data)) })
-
+            .then((data) => { alert(JSON.stringify(data)); setLoading(false); console.log(messages) });
     };
 
     const RenderMessages = () => {
-        if (messages === undefined) { return <button className='w-100 btn text-light bg-dark' onClick={testFunc}>refresh</button>};
-        console.log(messages)
+
+        if (_messages === undefined) { return console.log(_messages) };
+        console.log(_messages)
         return (
             <>
-                <button className='w-100 btn text-light bg-dark' onClick={testFunc}>refresh</button>
+                {/* <button className='w-100 btn text-light bg-dark' onClick={''}>refresh</button> */}
                 {/* {loading ? ( */}
                 
                     <div className='m-2 text-light'>
-                        {messages.receivedMessages.map((message) => {
+                        {_messages.receivedMessages.map((message) => {
                             return (
                                 <>
                                     <div className='bg-light m-3 text-dark p-2 badge d-flex flex-column justify-content-start'>
@@ -86,19 +57,25 @@ const HandleMessageHistory = () => {
             </>
         )
     };
-    if (activeChat[0] !== undefined) {
+    if(activeChat === undefined) {return}
+    if (activeChat !== undefined) {
         return (
             <Fragment>
                 <header className='Messenger-Component-header'>
                     messaging: {activeChat}
                 </header>
                 <div className='Messenger-message-history-body'>
-                    <RenderMessages/>
+                    <RenderMessages />
                 </div>
                 <div className='Messenger-main-input'>
-                    <form className='w-100' name='message' value={''} onSubmit={sendMessage}>
+                    {!loading ? (<form className='w-100' name='message' value={''} onSubmit={sendMessage}>
                         <input className='w-100' name='message' value={value.message} onChange={setForm}></input>
                     </form>
+                    ) : (
+                        <div className='w-100 h-100 bg-light'>
+                            loading...
+                        </div>
+                    )}
                 </div>
             </Fragment>
         );

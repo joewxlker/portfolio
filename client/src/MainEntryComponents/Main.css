@@ -47,12 +47,28 @@
     /* background: #000; */
 }
 
-@keyframes rotateCanvas {
+.main-Canvas-ForeGround-left{
+    position:absolute;
+    position: top;
+    z-index: 3;
+    animation: rotateCanvasForeGround 5s linear infinite;
+    -o-animation: rotateCanvasForeGround  5s linear infinite;
+    /* background: #000; */
+}
+@keyframes rotateCanvasForeGround{
     from{
-        transform:translate(-44px,-460px);
+        transform:translate(100px,100px);
     }
     to{
-        transform:translate(-44px,-660px);
+        transform:translate(0px,0px);
+    }
+}
+@keyframes rotateCanvas {
+    from{
+        transform:translate(100px,-500px);
+    }
+    to{
+        transform:translate(100px,-660px);
     }
     from{
         -o-transform:translate(-44px,-460px);
@@ -61,6 +77,16 @@
         -o-transform:translate(-44px,-660px);
     }
 }
+
+/* .main-Canvas-ForeGround-right{
+    position:absolute;
+    position: top;
+    z-index: 3;
+    animation: rotateCanvasForeGround 5s linear infinite;
+    -o-animation: rotateCanvasForeGround  5s linear infinite;
+    background: #000;
+} */
+
 
 .Main-side-bar{
     /* display:block; */
@@ -148,25 +174,3 @@ h2 {
     border-width: 3px;
     border-color:rgb(121, 49, 255);
 }
-.Main-Svg-spinner{
-    fill: #fff;
-    stroke: #f2f2f2;
-    stroke-miterlimit: 10;
-    stroke-width: 10px;
-    display: absolute;
-    height: 100px;
-    width: 300px;
-    /* transform: translate(-100px, -500px); */
-    animation: rotateSvg 10s linear infinite;
-    z-index: -100;
-    /* animation-timing-function: ease-in-out; */
-    /* animation-delay: 0s; */
-}
-@keyframes rotateSvg{
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-  }
