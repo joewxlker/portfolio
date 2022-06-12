@@ -40,28 +40,12 @@
     /* background: #000; */
 }
 
-.main-Canvas-ForeGround-left{
-    position:absolute;
-    position: top;
-    z-index: 3;
-    animation: rotateCanvasForeGround 5s linear infinite;
-    -o-animation: rotateCanvasForeGround  5s linear infinite;
-    /* background: #000; */
-}
-@keyframes rotateCanvasForeGround{
-    from{
-        transform:translate(100px,100px);
-    }
-    to{
-        transform:translate(0px,0px);
-    }
-}
 @keyframes rotateCanvas {
     from{
-        transform:translate(100px,-500px);
+        transform:translate(-50px,-500px);
     }
     to{
-        transform:translate(100px,-660px);
+        transform:translate(-50px,-660px);
     }
     from{
         -o-transform:translate(-44px,-460px);

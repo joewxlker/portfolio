@@ -8,6 +8,7 @@ const HandleLogin = () => {
     const [bool, setBool] = useState(false);
     const [value, setForm] = useSetForm({ username: '' });
     const [loading, setLoading] = useState(true)
+    const [pending, setPending] = useState(false)
     const exists = useCheckExists();
     const address = useSetUserAddress()
     const navigate = useNavigate()
@@ -29,10 +30,9 @@ const HandleLogin = () => {
     }
 
     const login = async (event, data) => {
+        event.preventDefault()
         if(userInfo === undefined) { return }
         let username = userInfo[0]
-        console.log(username)
-        event.preventDefault()
         console.log(username)
         if (value.username === username) {
             localStorage.setItem('username', `${username}`)
@@ -47,6 +47,7 @@ const HandleLogin = () => {
 
     const createAccount = async (event) => {
         event.preventDefault();
+        setPending(true);
         console.log(address, value.username)
         await fetch('/api/createAccount', {
             method: 'post',
@@ -54,7 +55,7 @@ const HandleLogin = () => {
             body: JSON.stringify({ sender: address, username: value.username })
         })
             .then((res) => res.json())
-            .then((data) => login(event, data));
+            .then((data) => { login(event, data); alert(data); setPending(false); window.location.reload(); });
     }
 
     if (exists) {
@@ -73,23 +74,30 @@ const HandleLogin = () => {
         );
     }
     else {
-        return (
-            
-            <>
-                <div className='d-flex flex-column justify-content-center align-items-center'>
-                    <h1>Create Account</h1>
-                    < div className='Login-Form d-flex flex-row' >
-                        <h3>Username: </h3>
-                        <form className='w-100' onSubmit={createAccount}>
-                            <input className='w-100' name='username' value={value.username} onChange={setForm}>
-                            </input>
-                        </form>
+        if (!pending) {
+            return (
+                <>
+                    <div className='d-flex flex-column justify-content-center align-items-center'>
+                        <h1>Create Account</h1>
+                        < div className='Login-Form d-flex flex-row' >
+                            <h3>Username: </h3>
+                            <form className='w-100' onSubmit={createAccount}>
+                                <input className='w-100' name='username' value={value.username} onChange={setForm}>
+                                </input>
+                            </form>
+                        </div>
                     </div>
-                </div>
-                <TimeOut />
-            </>
+                    <TimeOut />
+                </>
             
-        );
+            );
+        } else {
+            <>
+                <div className='w-100 h-100 d-flex justify-content-center align-items-center'>
+                    <h1 className='text-accent'>Sending transaction to the blockchain...</h1>
+                </div>
+            </>
+        }
     };
 };
 
