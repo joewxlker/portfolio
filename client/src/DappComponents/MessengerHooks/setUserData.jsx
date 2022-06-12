@@ -33,7 +33,7 @@ export const useUserInfo = () => {
     const getUserInfo = () => {
         if (address === undefined) { return }
         if (address === '') { return }
-        if (userInfo !== undefined) console.log('useUserInfo', userInfo)
+        if (userInfo !== undefined) return
         setTimeout(() => {
             fetch('/api/userInfo', {
                 method: 'post',
@@ -55,7 +55,7 @@ export const useUserInfo = () => {
 export const useAllUsers = () => {
     // const address = useSetUserAddress();
     const [allUsers, setAllUsers] = useState()
-    console.log('useAllUsers', allUsers)
+    // console.log('useAllUsers', allUsers)
     const getAllUsers = () => {
         fetch('/api/allUsers', {
             method: 'post',
@@ -99,8 +99,8 @@ export const useSetFriendCode = () => {
     const address = useSetUserAddress();
     const getFriendCode = () => {
         // if (address !== undefined && activeChat !== undefined) console.log('useSetFriendCode', friendCode);
-        if (address === undefined) { return console.log(address)};
-        if (activeChat === undefined) { return console.log(activeChat)};
+        if (address === undefined) { return };
+        if (activeChat === undefined) { return };
         fetch('/api/friendCode', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
@@ -121,7 +121,6 @@ export const useSetFriendsArray = () => {
     const [friends, setFriends] = useState();
     const address = useSetUserAddress();
     const fetchFriends = () => {
-        if (address !== undefined) console.log('useFriendsArray', friends)
         if (address === undefined) { return }
         fetch('/api/friendList', {
             method: 'post',
@@ -157,7 +156,6 @@ export const useCheckExists = () => {
             let _lowerCase = _account.toLowerCase();
             if (lowerCase === _lowerCase) {
                 setExists(true)
-                console.log(lowerCase, _lowerCase);
                 break
             }
             
@@ -178,7 +176,7 @@ export const useCheckExists = () => {
 
     useEffect(() => {
         checkIfUserExists();
-        console.log(exists)
+        // console.log(exists)
     }, [address, exists])
 
     return exists;
@@ -190,8 +188,8 @@ export const useGetMessages = () => {
     // const [undefinedMessages, setUndefinedMessages] = useState(false);
     // const address = useSetUserAddress();
     const getMessages = () => {
-        if (friendCode === undefined) { return console.log('useGetMessages', messages, friendCode) }; 
-        console.log('getting messages')
+        if (friendCode === undefined) { return }; 
+        // console.log('getting messages')
         fetch('/api/getMessages', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
