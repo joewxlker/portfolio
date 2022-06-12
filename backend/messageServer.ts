@@ -188,7 +188,7 @@ app.post('/api/createAccount', async (req, res) => {
             res.send({ txnHash: `transaction hash: ${receipt.transactionHash}` })
         }
         catch (err) {
-            let _err: string;
+            let _err;
             if (err.data === null) {
                 _err = 'no gas';
             }

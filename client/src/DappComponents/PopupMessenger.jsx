@@ -20,6 +20,22 @@ class PopupMessenger extends Component {
         this.setState({value: event.target.value})
     }
 
+    sendMessage = async (event) => {
+        event.preventDefault()
+        this.setState({ value: '' })
+        let sender = '0x3a2eee01f7069ad2330b09465e5277adbb662809';
+        let receiver = '0x2D9d35fAF446dDBa48173811bD9707E53A55fC03';
+
+        await fetch('/api/sendMessage', {
+            method: 'post',
+            headers: { 'Content-Type': 'application.json' },
+            body: JSON.stringify({ sender: sender, receiver: receiver, message: this.state.value })
+        })
+            .then((res) => res.json())
+        .then((data)=> console.log(data))
+
+    }
+
     OpenClose = () => {
         if (!this.state.open) {
             return (
@@ -50,23 +66,6 @@ class PopupMessenger extends Component {
             );
         }
     };
-
-    sendMessage = async (event) => {
-        event.preventDefault()
-        console.log(this.state.value)
-        this.setState({ value: '' })
-        let sender = '0x51C7dEa8167E3dD72A25499Ad4e9850dA0907450';
-        let receiver = '0x04b4dbA9D2F34F007F55e350BCFf0DB318003a68';
-
-        await fetch('/api/sendMessage', {
-            method: 'post',
-            headers: { 'Content-Type': 'application.json' },
-            body: JSON.stringify({ sender: sender, receiver: receiver })
-        })
-            .then((res) => res.json())
-        .then((data)=> console.log(data))
-
-    }
 
 
     render() {

@@ -146,8 +146,9 @@ export const useCheckExists = () => {
 
     const [exists, setExists] = useState(false);
     const address = useSetUserAddress();
-    console.log('useCheckExists', exists)
+
     const filterArr = (data) => {
+        if (address === undefined) { return }
         let accounts = data.allUsers
         let account = address;
         let lowerCase = account.toLowerCase();
@@ -156,13 +157,16 @@ export const useCheckExists = () => {
             let _lowerCase = _account.toLowerCase();
             if (lowerCase === _lowerCase) {
                 setExists(true)
+                console.log(lowerCase, _lowerCase);
                 break
             }
-            else setExists(false)
+            
+            else setExists(false);
         }
     };
 
     const checkIfUserExists = () => {
+        if(address === undefined) {return}
         fetch('/api/allUSers', {
             method: 'post',
             headers: { 'Data-Type': 'applications/json' },
@@ -175,7 +179,7 @@ export const useCheckExists = () => {
     useEffect(() => {
         checkIfUserExists();
         console.log(exists)
-    }, [])
+    }, [address, exists])
 
     return exists;
 }
