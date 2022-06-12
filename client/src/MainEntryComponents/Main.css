@@ -1,13 +1,11 @@
 .MainFlex {
     margin-top: 150px;
-    /* background: linear-gradient(rgb(255, 255, 255),rgba(145, 145, 145, 0.726)),url(../Images/PolygonWhite.svg); */
     background-size: cover;
     background-position: center;
     width: 90%;
     border-radius: 15px;
     z-index: 1;
     min-width: 400px;
-    /* box-shadow: 0px 0px 10px 7px rgba(0, 0, 0, 0.719); */
     flex-wrap:wrap;
 }
 
@@ -37,7 +35,6 @@
     transform:translate(-44px,-560px);
     animation: rotateCanvas 5s linear infinite;
     -o-animation: rotateCanvas 5s linear infinite;
-    /* background: #000; */
 }
 
 @keyframes rotateCanvas {
@@ -103,20 +100,6 @@
     stroke: #f2f2f2;
     stroke-miterlimit: 10;
     stroke-width: 8px;
-}
-
-.Main-background-polygon{
-    width: 50%;
-    position: absolute;
-    transform: translate(-700px, -700px);
-    z-index: -1;
-}
-
-.Main-background-polygon-small{
-    position: absolute;
-    transform: translate(600px, -200px);
-    width: 30%;
-    z-index: 0;
 }
 
 h1{

@@ -6,6 +6,8 @@ import { Fragment } from 'react';
 import Header from './MainEntryComponents/Header.jsx'
 import PolygonOverlay from './MainEntryComponents/PolygonOverlay'
 import SectionOne from './MainEntryComponents/SectionOne';
+import ContactMe from './MainEntryComponents/ContactMe';
+import SolutionsMain from './SolutionsComponents/SolutionsMain';
 
 class App extends Component {
 
@@ -15,7 +17,9 @@ class App extends Component {
         <Header />
         <Main />
         <PolygonOverlay />
-        <SectionOne/>
+        <SectionOne />
+        <SolutionsMain />
+        <ContactMe />
       </Fragment>
     );
   };

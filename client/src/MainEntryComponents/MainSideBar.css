@@ -54,3 +54,28 @@
 .polygon-svg{
     cursor: pointer;
 }
+
+.openClose-text {
+    /* animation-name: closeSettings;
+    animation-duration: 0.1s;
+    animation-timing-function: ease-in-out;
+    animation-delay: 0s; */
+    animation-name: openTextSettings;
+    animation-timing-function: ease-in-out;
+    font-size: 150%;
+    animation-delay: 3s;
+}
+
+@keyframes openTextSettings {
+    from {
+        font-size: 1%;
+    }
+    to {
+        font-size: 150%;
+    }
+  }
+
+  .linkedin {
+    height: 50px;
+    margin: 10%;
+  }

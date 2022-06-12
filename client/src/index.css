@@ -19,14 +19,14 @@ code {
 }
 
 #root{
-  height: 100%;
+  height: 4000px;
   margin: 0%;
   display: flex;
-  justify-content: center;
+  justify-content: top;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  background: linear-gradient(180deg, rgba(6, 3, 7, 0.973), rgba(0, 0, 0, 0.137)),url(./Images/mainBkg.svg);
+  background: linear-gradient(180deg, rgba(6, 3, 7, 0.932),rgba(6, 3, 7, 0.593), rgba(6, 3, 7, 0.63), rgba(0, 0, 0, 0.744)),url(./Images/mainBkg.svg);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
