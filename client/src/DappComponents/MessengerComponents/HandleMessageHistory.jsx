@@ -3,23 +3,80 @@ import { useEffect } from 'react';
 import '../Messenger.css'
 import { useGetMessages, useSetActive, useSetForm, useSetUserAddress } from '../MessengerHooks/setUserData';
 
-const HandleMessageHistory = () => {
+export const PopupMessegeHistory = () => {
+    return <HandleMessageHistory addressTo = '0x2D9d35fAF446dDBa48173811bD9707E53A55fC03' addressFrom= '0x51C7dEa8167E3dD72A25499Ad4e9850dA0907450' popup='true'/>
+}
 
-    
+export const HandleMessageHistory = (props) => {
+
+    console.log(props.addressTo, props.addressFrom, props.popup)
+
     const [value, setForm] = useSetForm();
     const [loading, setLoading] = useState(false);
-    const messages = useGetMessages();
+    const [friendCode, setFriendCode] = useState();
+    const [messages, setMessages] = useState();
+
+    let _address
+    let _activeChat
+
     const address = useSetUserAddress();
+    _address = address
+    if (props.addressTo !== undefined) {
+        _address = props.addressTo;
+    }
+
     const activeChat = useSetActive();
+    _activeChat = activeChat;
+    if (props.addressFrom !== undefined) {
+        _activeChat = props.addressFrom;
+    }
+
+    const getFriendCode = () => {
+        // if (address !== undefined && activeChat !== undefined) console.log('useSetFriendCode', friendCode);
+        if (_address === undefined) { return };
+        if (_activeChat === undefined) { return };
+        fetch('/api/friendCode', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sender: _address, receiver: _activeChat })
+        })
+            .then((res) => res.json())
+            .then((data) => setFriendCode(data))
+    };
+
+    useEffect(() => {
+        getFriendCode();
+    }, [address, activeChat]);
+
+    // const [undefinedMessages, setUndefinedMessages] = useState(false);
+    // const address = useSetUserAddress();
+    const getMessages = () => {
+        if (friendCode === undefined) { return }; 
+        // console.log('getting messages')
+        fetch('/api/getMessages', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ friendCode: friendCode })
+        })
+            .then((res) => res.json())
+            .then((data) => { setMessages(data)})
+    };
+
+    useEffect(() => {
+        getMessages();
+    }, [friendCode]);
+
+    
+    
     //messageMap, implemented to seperate 2D message array sent from solidty in to sender/receiver arrays 
     const MessageMap = () => {
-        if (messages === undefined || address === undefined) return; //address && messages must be defined to avoid errors
+        if (messages === undefined) return; //_address && messages must be defined to avoid errors
         let _messages = messages.receivedMessages;
         let newMessages = [];
         // here we define a new array which we will pass the new values to
         for (let k in _messages) {
             newMessages.push([_messages[k][0].toUpperCase(), _messages[k][1]]);
-            // we then iterate through our _messages array and convert our address values to uppercase
+            // we then iterate through our _messages array and convert our _address values to uppercase
         }
         let map = new Map(newMessages); //MAP ONLY STORES THE MOST RECENT MESSAGE SENT AND NOT ALL MESSAGES! NEED TO FIX !
 
@@ -27,18 +84,15 @@ const HandleMessageHistory = () => {
         let receiverMessageArray = [];
         let senderMessageArray = [];
         // we define empty arrays to store our key/value pairs once we have targetted them and seperated them into sender/receiver key value pairs
+        let senderMessages = map.get(_address.toUpperCase()); //_address.toUpperCase is to ensure that both the key stored and the key we are 
+        let receiverMessages = map.get(_activeChat.toUpperCase()); //putting in will have the same case value
+        senderMessageArray.push([senderMessages, _activeChat.toUpperCase()]) // we then push these arrays containing the _address and 
+        receiverMessageArray.push([receiverMessages, _address.toUpperCase()]) // message linked to that _address so we can map/render each value to the dom
+        if (senderMessageArray === undefined || receiverMessageArray === undefined) { return }
+            return (
 
-        let senderMessages = map.get(address.toUpperCase()); //address.toUpperCase is to ensure that both the key stored and the key we are 
-        let receiverMessages = map.get(activeChat.toUpperCase()); //putting in will have the same case value
-        senderMessageArray.push([senderMessages, activeChat.toUpperCase()]) // we then push these arrays containing the address and 
-        receiverMessageArray.push([receiverMessages, address.toUpperCase()]) // message linked to that address so we can map/render each value to the dom
-
-        if (senderMessageArray === undefined || receiverMessageArray === undefined) { return console.log(senderMessageArray) }
-        
-        return (
-
-            <>
-                {/* {loading ? ( // loading has a chance to be set indefinetly thus breaking our code and returning nothing :D */}
+                <>
+                    {/* {loading ? ( // loading has a chance to be set indefinetly thus breaking our code and returning nothing :D */}
                     <>
                         <div className='m-2 text-light'>
                             {senderMessageArray.map((message) => {
@@ -65,42 +119,42 @@ const HandleMessageHistory = () => {
                             })}
                         </div>
                     </>
-                {/* ) : (
+                    {/* ) : (
                     <div>
                     </div>
                 )
 
                 } */}
-            </>
-        )
-    };
+                </>
+            )
+    }
 
     const sendMessage = async (event) => {
         // handles messages sent, setLoading is used to prevent multiple message requests at once as the server cant handle too many requests until
-        // more addresses are implemented to handle transactions or frontend web3 handling is implemented...
+        // more _addresses are implemented to handle transactions or frontend web3 handling is implemented...
         // in that case the user will be required to process their own transactions manually using their web3 provider
-        // attempting to send multiple transactions from the same address requires gas/nonce handling
+        // attempting to send multiple transactions from the same _address requires gas/nonce handling
         event.preventDefault();
         setLoading(true)
         await fetch('/api/sendMessage', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ sender: address, receiver: activeChat, message: value.message })
+            body: JSON.stringify({ sender: _address, receiver: _activeChat, message: value.message })
         })
             .then((res) => res.json())
-            .then((data) => { alert(JSON.stringify(data)); setLoading(false); console.log(messages) });
+            .then((data) => { alert(JSON.stringify(data));alert('Refresh your browser to see updates'); setLoading(false); });
     };
 
-    if (activeChat !== undefined) { // we use conditional rendering here to either display the message history and active receiver to the user
+    if (_activeChat !== undefined) { // we use conditional rendering here to either display the message history and active receiver to the user
         // or we display ' Please select a user to begin messaging'... until we implement a "delete active chat" function in solidity and shutdown functions in react to call this,
-        // activeChat will remain true on load once setactive is called atleast once as this value is strored in solidity forever
+        // _activeChat will remain true on load once setactive is called atleast once as this value is strored in solidity forever
 
         // here we get the active chat from solidity and display it so the user knows who they are messaging
         // we also handle user input, handle sending, loading and message history
         return (
             <Fragment>
                 <header className='Messenger-Component-header'>
-                    messaging: {activeChat}
+                    messaging: {_activeChat}
                 </header>
                 <div className='Messenger-message-history-body'>
                     <MessageMap />
@@ -110,8 +164,8 @@ const HandleMessageHistory = () => {
                         <input className='w-100' name='message' value={value.message} onChange={setForm}></input>
                     </form>
                     ) : (
-                        <div className='w-100 h-100 bg-light'>
-                            loading...
+                        <div className='w-100 h-100 bg-light d-flex justify-content-center align-items-center'>
+                            <h4>Transaction Pending</h4>
                         </div>
                     )}
                 </div>
@@ -128,7 +182,8 @@ const HandleMessageHistory = () => {
                 </div>
             </div>
         </>
+
     );
 
 };
-export default HandleMessageHistory
+// export default HandleMessageHistory

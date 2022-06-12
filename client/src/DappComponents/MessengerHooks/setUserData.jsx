@@ -93,28 +93,7 @@ export const useSetActive = () => {
     return activeChat
 
 }
-export const useSetFriendCode = () => {
-    const [friendCode, setFriendCode] = useState();
-    const activeChat = useSetActive();
-    const address = useSetUserAddress();
-    const getFriendCode = () => {
-        // if (address !== undefined && activeChat !== undefined) console.log('useSetFriendCode', friendCode);
-        if (address === undefined) { return };
-        if (activeChat === undefined) { return };
-        fetch('/api/friendCode', {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ sender: address, receiver: activeChat})
-        })
-            .then((res) => res.json())
-            .then((data) => setFriendCode(data))
-    };
-    useEffect(() => {
-        getFriendCode();
-    }, [address, activeChat]);
 
-    return friendCode;
-}
 
 export const useSetFriendsArray = () => {
 
@@ -180,26 +159,4 @@ export const useCheckExists = () => {
     }, [address, exists])
 
     return exists;
-}
-
-export const useGetMessages = () => {
-    const [messages, setMessages] = useState();
-    const friendCode = useSetFriendCode();
-    // const [undefinedMessages, setUndefinedMessages] = useState(false);
-    // const address = useSetUserAddress();
-    const getMessages = () => {
-        if (friendCode === undefined) { return }; 
-        // console.log('getting messages')
-        fetch('/api/getMessages', {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ friendCode: friendCode })
-        })
-            .then((res) => res.json())
-            .then((data) => { setMessages(data)})
-    };
-    useEffect(() => {
-        getMessages();
-    }, [friendCode]);
-    return messages;
 }

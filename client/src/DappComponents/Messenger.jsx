@@ -2,7 +2,7 @@ import React, { Component, useEffect} from 'react';
 import './Messenger.css'
 import LoginAuth from './LoginAuth';
 import HandleUsers from './MessengerComponents/HandleUsers.jsx'
-import HandleMessageHistory from './MessengerComponents/HandleMessageHistory.jsx'
+import {HandleMessageHistory} from './MessengerComponents/HandleMessageHistory.jsx'
 import HandleMediaContent from './MessengerComponents/HandleMediaContent.jsx'
 import SideBar from './MessengerComponents/SideBar.jsx'
 // import LoadUserInterface from './MessengerHooks/LoadUserInterface';
