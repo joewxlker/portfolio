@@ -12,6 +12,7 @@
 .SectionOne-cardsMain{
     background-color: white;
     z-index: 1;
+    padding-bottom: 5%;
 }
 .SectionOne-Cards{
     /* background-color: rgb(51, 51, 51); */
@@ -32,7 +33,9 @@
     align-items: center;
     margin: 3%;
     width: 40%;
-    height: 500px;
+    min-width: 300px;
+    height: 600px;
+    max-height: max-content;
     background-color: rgb(54, 54, 54);
     box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.719);
     background-size: 500px 500px;
@@ -43,7 +46,7 @@
 
 .redfoxinu-img{
     width: 100%;
-    height: 300px;
+    height: 250px;
 }
 
 .Live-Preview-button{

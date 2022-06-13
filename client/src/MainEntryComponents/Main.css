@@ -1,18 +1,46 @@
 .MainFlex {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     margin-top: 150px;
     background-size: cover;
     background-position: center;
     width: 90%;
     border-radius: 15px;
     z-index: 1;
-    min-width: 400px;
+    min-width: 300px;
     min-height: 400px;
+    flex-wrap:wrap;
+}
+/*MainFlex flex-column d-flex flex-row justify-content-center align-items-center text-light*/
+
+.MainFlexMobile{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80px;
+    background-size: cover;
+    background-position: center;
+    width: 90%;
+    border-radius: 15px;
+    z-index: 1;
+    min-width: 300px;
+    height: 400px;
     flex-wrap:wrap;
 }
 
 .Main-welcomeContainer{
     min-width: 200px;
     width: 40%;
+    min-width: 300px;
+}
+
+.Main-welcomeContainerMobile{
+    min-width: 200px;
+    width: 40%;
+    min-width: 300px;
 }
 
 .main-svgLink{
@@ -30,37 +58,68 @@
 }
 
 .main-Canvas{
+    width: 100%;
+    height: 80%;
     position:absolute;
     position: top;
     z-index: 0;
-    transform:translate(-44px,-560px);
-    animation: rotateCanvas 5s linear infinite;
-    -o-animation: rotateCanvas 5s linear infinite;
+    transform:translate(-44px,-0px);
+    animation: rotateCanvas 10s linear infinite;
+    -o-animation: rotateCanvas 10s linear infinite;
+    /* background-color: rgba(37, 37, 37, 0.445); */
+    
+}
+
+.Links-Container-Mobile{
+    z-index: 100;
+    width: 80%;
+}
+
+.Links-Container{
+    z-index: 100;
+    width: 10%;
+}
+
+.OnHoverShowCode{
+    display: absolute;
+    left: 10px;
+    top: 0%;
+    z-index: 10;
+    position:absolute;
+    transform: translateY( 100px);
+    top: 0px;
+}
+
+.ShowCode {
+    display: absolute;
+    position: absolute;
+    padding: 10px;
+    top: 30px;
+    left: 30px;
+    background-color: #f2f2f2;
+    width: 600px;
+    z-index: 100;
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.719);
 }
 
 @keyframes rotateCanvas {
     from{
-        transform:translate(-50px,-500px);
+        transform:translate(-0px,850px);
     }
     to{
-        transform:translate(-50px,-660px);
+        transform:translate(-0px,-650px);
     }
     from{
-        -o-transform:translate(-44px,-460px);
+        -o-transform:translate(-0px,-0px);
     }
     to{
-        -o-transform:translate(-44px,-660px);
+        -o-transform:translate(-0px,-300px);
     }
 }
 
-/* .main-Canvas-ForeGround-right{
-    position:absolute;
-    position: top;
-    z-index: 3;
-    animation: rotateCanvasForeGround 5s linear infinite;
-    -o-animation: rotateCanvasForeGround  5s linear infinite;
-    background: #000;
-} */
+.MainLinks{
+    z-index: 100;
+}
 
 
 .Main-side-bar{
@@ -71,7 +130,8 @@
     top: 10%;
     margin-top: 5%;
     background-color: rgb(37, 37, 37);
-    width: 50px;
+    width: 3%;
+    min-width: 50px;
     height: 50%;
     border-bottom-right-radius: 15px;
     border-top-right-radius: 15px;
@@ -104,7 +164,7 @@
 }
 
 h1{
-    font-size: 2.9vw;
+    font-size: 5vh;
     font-family: monospace;
     font-weight: 600;
 }
@@ -128,6 +188,14 @@ h2 {
 
 .bg-accent{
     background-color: rgb(255, 166, 0);
+}
+
+.bg-outline-accent{
+
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(255, 166, 0);
 }
 
 .text-border-outline{

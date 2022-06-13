@@ -1,0 +1,42 @@
+.PopupMessengerMobile-Main-Flex{
+    background-color: aliceblue;
+    position: fixed;
+    display: flex;
+    bottom: 0;
+    z-index: 10;
+    width: 100%;
+}
+
+.PopupMessengerMobile-Header-Closed{
+    height: 50px;
+    width: 100%;
+}
+.PopupMessengerMobile-Header-Open{
+    height: 20px;
+    width: 100%;
+}
+
+.PopupMessengerMobile-Message-History{
+    height: 300px;
+    width: 250px;
+}
+
+.PopupMessengerMobile-Message-History-Closed{
+    height: 10px;
+    width: 100%;
+}
+
+#Popup-Open{
+    height: 500px;
+    background-color: aliceblue;
+}
+.Messenger-Component-header{
+
+}
+.Messenger-message-history-body{
+    height: 400px;
+
+}
+.Messenger-main-input{
+    height: 70px;
+}
