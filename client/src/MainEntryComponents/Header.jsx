@@ -30,7 +30,7 @@ export default class Header extends Component {
                     <this.Links />
                 </nav>
                 <div className='connectButtonContainer d-flex flex-column w-25 justify-content-center align-items-end m-2'>
-                    <button className='connectButton w-25 mr-5 btn bg-light text-dark'>
+                    <button className='connectButton w-25 mr-5 btn bg-accent text-dark'>
                         <span><h6>Contact Me</h6></span>
                     </button>
                 </div>

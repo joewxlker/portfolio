@@ -21,7 +21,7 @@
 }
 
 .header{
-    height: 70px;
+    height: 50px;
     width: 95%;
     background-color:rgb(51, 51, 51);
     border-bottom-left-radius: 15px;
@@ -34,7 +34,7 @@
     stroke-miterlimit: 10;
     stroke-width: 10px;
     display: absolute;
-    height: 50px;
+    height: 35px;
     /* transform: translate(-100px, -500px); */
     animation: rotateSvg 30s linear infinite;
     z-index: -100;

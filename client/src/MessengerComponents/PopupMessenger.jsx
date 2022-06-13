@@ -2,7 +2,7 @@ import './PopupMessenger.css'
 import { useSetForm } from './MessengerHooks/setUserData'
 import { Component } from 'react'
 import { createRef } from 'react'
-import {PopupMessegeHistory} from './MessengerComponents/HandleMessageHistory'
+import {PopupMessegeHistory} from './HandleMessageHistory'
 import { Link } from 'react-router-dom'
 
 class PopupMessenger extends Component {
@@ -26,11 +26,11 @@ class PopupMessenger extends Component {
         if (!this.state.open) {
             return (
                 <>
-                    <header className='PopupMessenger-Header-Closed bg-dark text-light'>
-                        <button className='btn w-100 h-100 text-light' onClick={(e) => {
+                    <header className='PopupMessenger-Header-Closed bg-accent text-light'>
+                        <button className='btn w-100 h-100 text-dark' onClick={(e) => {
                             e.preventDefault(); this.setState({ open: true });
                             // alert(`Please note that I do not have any sort of notifications set up and may take a while to respond to messages sent here This messenger also has no way of deleting messages or clearing data at this point and I am yet to set up multiple guest user accounts`)
-                        }}>Contact me using the blockchain!</button>
+                        }}>Contact me</button>
                     </header>
                     <div>
                     </div>
@@ -40,8 +40,8 @@ class PopupMessenger extends Component {
         }
         else {
             return (<>
-                <header className='PopupMessenger-Header-Closed bg-dark text-light'>
-                    <button className='btn w-100 h-100 text-light' onClick={(e) => { e.preventDefault(); this.setState({ open: false }) }}></button>
+                <header className='PopupMessenger-Header-Closed bg-accent text-light'>
+                    <button className='btn w-100 h-100' onClick={(e) => { e.preventDefault(); this.setState({ open: false }) }}></button>
                 </header>
                 <p className='m-1 p-1 badge text-light bg-dark d-flex'>
                     This messenger uses web3/Blockchain technology to

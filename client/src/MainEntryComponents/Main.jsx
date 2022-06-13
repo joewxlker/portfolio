@@ -3,8 +3,7 @@ import { Fragment } from 'react'
 import './Main.css'
 import CanvasShapes from './MainCanvas'
 import SideBar from './MainSideBar';
-// import linkedin from '../Images/linkedin-svgrepo-com.svg'
-import PopupMessenger from '../DappComponents/PopupMessenger.jsx'
+import PopupMessenger from '../MessengerComponents/PopupMessenger'
 
 export default class Main extends Component {
 

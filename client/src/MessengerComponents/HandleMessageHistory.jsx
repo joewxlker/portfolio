@@ -1,7 +1,7 @@
 import React, { Component, Fragment, useState } from 'react'
 import { useEffect } from 'react';
-import '../Messenger.css'
-import { useGetMessages, useSetActive, useSetForm, useSetUserAddress } from '../MessengerHooks/setUserData';
+// import '../Messenger.css'
+import { useGetMessages, useSetActive, useSetForm, useSetUserAddress } from './MessengerHooks/setUserData';
 
 export const PopupMessegeHistory = () => {
     return <HandleMessageHistory addressTo = '0x2D9d35fAF446dDBa48173811bD9707E53A55fC03' addressFrom= '0x51C7dEa8167E3dD72A25499Ad4e9850dA0907450' popup='true'/>

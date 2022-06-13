@@ -40,6 +40,16 @@
     border-radius: 15px;
     padding: 3%;
 }
+
+.redfoxinu-img{
+    width: 100%;
+    height: 300px;
+}
+
+.Live-Preview-button{
+    width: 80%;
+}
+
 .SectionOne-Card-Summary{
     display: flex;
     justify-content: center;

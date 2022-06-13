@@ -69,7 +69,7 @@ app.post('/api/userInfo', async (req, res) => {
     if (sender=== undefined) { return console.log('invalid sender@userinfo') }
     else if (sender === '') { return console.log('invalid sender@userInfo') }
     try {
-        let userInfo: Array<string>;
+        let userInfo;
         await myContract.methods.getAccountInfo(sender).call((_err, response) => {
             userInfo = response
         })
@@ -82,7 +82,7 @@ app.post('/api/userInfo', async (req, res) => {
 app.post('/api/friendCode', async (req, res) => {
     let sender = req.body.sender;
     let receiver = req.body.receiver;
-    let friendCode: string;
+    let friendCode;
     if (sender=== undefined) { return console.log('invalid sender@friendCode') }
     else if (sender === '') { return console.log('invalid sender@friendCode') }
     if (receiver=== undefined) { return console.log('invalid receiver@friendCode') }

@@ -6,6 +6,7 @@
     border-radius: 15px;
     z-index: 1;
     min-width: 400px;
+    min-height: 400px;
     flex-wrap:wrap;
 }
 
@@ -122,11 +123,11 @@ h2 {
 }
 
 .text-accent{
-    color: rgb(121, 49, 255);
+    color: rgb(255, 166, 0);
 }
 
 .bg-accent{
-    background-color: rgb(121, 49, 255);
+    background-color: rgb(255, 166, 0);
 }
 
 .text-border-outline{
@@ -136,5 +137,5 @@ h2 {
     justify-content: center;
     align-items: center;
     border-width: 3px;
-    border-color:rgb(121, 49, 255);
+    border-color:rgb(255, 166, 0);
 }

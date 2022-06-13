@@ -26,7 +26,7 @@ const ConnectButton = () => {
     {
       return (
         <>
-          <div className='connectButton w-100 mr-5 btn bg-dark text-light'>
+          <div className='connectButton w-100 h-50 mr-5 btn bg-dark text-light'>
             <span>Connected</span>
           </div>
         </>
