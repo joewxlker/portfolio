@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import solutionMarkDown from './Solution.md'
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown from 'react-markdown'
 import './Solutions.css'
 
 const SolutionsMain = () => {
