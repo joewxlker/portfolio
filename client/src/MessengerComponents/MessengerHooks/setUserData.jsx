@@ -35,7 +35,7 @@ export const useUserInfo = () => {
         if (address === '') { return }
         if (userInfo !== undefined) return
         setTimeout(() => {
-            fetch('/api/userInfo', {
+            fetch('https://josephsportfolio.herokuapp.com/api/userInfo', {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ sender: address })
@@ -57,7 +57,7 @@ export const useAllUsers = () => {
     const [allUsers, setAllUsers] = useState()
     // console.log('useAllUsers', allUsers)
     const getAllUsers = () => {
-        fetch('/api/allUsers', {
+        fetch('https://josephsportfolio.herokuapp.com/api/allUsers', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 'null': 'null' })
@@ -77,7 +77,7 @@ export const useSetActive = () => {
     const address = useSetUserAddress();
     const fetchActive = () => {
         if (address === undefined) { return }
-        fetch('/api/activeChat', {
+        fetch('https://josephsportfolio.herokuapp.com/api/activeChat', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ sender: address })
@@ -101,7 +101,7 @@ export const useSetFriendsArray = () => {
     const address = useSetUserAddress();
     const fetchFriends = () => {
         if (address === undefined) { return }
-        fetch('/api/friendList', {
+        fetch('https://josephsportfolio.herokuapp.com/api/friendList', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ sender: address })
@@ -144,7 +144,7 @@ export const useCheckExists = () => {
 
     const checkIfUserExists = () => {
         if(address === undefined) {return}
-        fetch('/api/allUSers', {
+        fetch('https://josephsportfolio.herokuapp.com/api/allUSers', {
             method: 'post',
             headers: { 'Data-Type': 'applications/json' },
             body: JSON.stringify({ null: null })
