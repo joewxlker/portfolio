@@ -1,21 +1,24 @@
 import React, { Component, useEffect, useState } from 'react'
 import { Fragment } from 'react'
 import './Main.css'
-import CanvasShapes from './MainCanvas'
+import CanvasShapes from './Canvas/MainCanvas'
 import SideBar from './MainSideBar';
-import PopupMessenger from '../MessengerComponents/PopupMessenger'
-import PopupMessengerMobile from '../MessengerComponents/PopupMessengerMobile'
+import PopupMessenger from '../../MessengerComponents/PopupMessenger'
+import PopupMessengerMobile from '../../MessengerComponents/PopupMessengerMobile'
+import ReactMarkdown from 'react-markdown'
+import BackgroundCodeMarkdown from '../BgCode.md'
+
 
 const Main = () => {
-    
+
     const [isMobile, setIsMobile] = useState(true)
     const [toggle, setToggle] = useState(false)
+    const [markdown, setMarkdown] = useState();
 
     useEffect(() => {
         if (window.innerWidth < 600) setIsMobile(false)
         if (window.innerWidth > 600) setIsMobile(true)
         window.addEventListener('resize', () => {
-            console.log(window.innerWidth)
             if (isMobile === undefined) return
             if (window.innerWidth < 600) setIsMobile(false)
             if (window.innerWidth > 600) setIsMobile(true)
@@ -26,55 +29,31 @@ const Main = () => {
         return <div className='d-flex w-100 justify-content-center'><PopupMessengerMobile /></div>
     }
 
+    useEffect(() => {
+        fetch(BackgroundCodeMarkdown).then(res => res.text()).then((text) => setMarkdown(text));
+    }, [markdown])
+
+    const handleChange = () => {
+        window.location.reload();
+    }
+    window.ethereum.on('accountsChanged', handleChange);
+
     const ShowCode = () => {
         if (toggle)
-            return <div
-                className='ShowCode bg-dark text-light'
-                onMouseOut={
+            return <div className='ShowCode bg-light rounded text-light'                     
+            onMouseLeave={
+            e => {
+                e.preventDefault();
+                if (toggle === undefined) return;
+                setToggle(false)
+                }}>
+                <ReactMarkdown children={markdown}                     
+                    onMouseLeave={
                     e => {
                         e.preventDefault();
                         if (toggle === undefined) return;
                         setToggle(false)
-                    }}>
-
-                {'const canvasRef = React.createRef();'} <br />
-                {'const imgRef = React.createRef();'}<br />
-
-                {' const drawShapes = () => {'}<br />
-                {'    let randomNumX = Math.floor(Math.random() * 1000)'}<br />
-                {'let randomNumY = Math.floor(Math.random() * 1000)'}<br />
-                {'let c = canvasRef.current'}<br />
-                {" if (c === null) return"}<br />
-                {'let ctx = c.getContext("2d")'}<br />
-                {'let ctx2 = c.getContext("2d")'}<br />
-                {'var path = new Path2D();'}<br />
-                {' var path2 = new Path2D();'}<br />
-                {'if(c === null) return'}<br />
-                {'ctx.fillStyle = "rgba(37, 37, 37, 0.6)";'}<br />
-                {'path.rect(randomNumX,randomNumY,randomNumY,randomNumX)'}<br />
-                {'ctx.fill(path);'}<br />
-                {' ctx2.fillStyle = "rgba(37, 37, 37, 0.6)";'}<br />
-                {'path2.rect(randomNumX, randomNumY, randomNumY, randomNumX);'}<br />
-                {'ctx2.fill(path2);'}<br />
-                {'ctx2.rotate(((2 * Math.PI) / 6) * randomNumX + ((2 * Math.PI) / 6000) * randomNumY);'}<br />
-                {'};'}<br />
-                <br />
-                {'const deleteShapes = () => {'}<br />
-                {' let canvas = canvasRef.current'}<br />
-                {' let ctx = canvas.getContext("2d")'}<br />
-                {' let path3 = new Path2D();'}<br />
-                {'path3.rect(canvas.width,canvas.height,canvas.width, canvas.height)'}<br />
-                {'ctx.fillStyle = "rgb(189, 142, 216)";'}<br />
-                {'ctx.clearRect(0, 0, canvas.width, canvas.height);'}<br />
-                {'}'}<br />
-
-                {' setInterval(() => {'}<br />
-                {'           drawShapes();'}<br />
-                {'   setTimeout(() => {'}<br />
-                {'           deleteShapes();'}<br />
-                {'    }, 2000)'}<br />
-                {'}, 2000)'}<br />
-
+                        }}></ReactMarkdown>
             </div>
     };
 
@@ -82,10 +61,10 @@ const Main = () => {
         if (!isMobile) {
             return (
                 <>
-                    <div className='Links-Container-Mobile'>
-                        <button className=' w-100 m-2 btn bg-outline-accent text-light'> Resume </button>
-                        <button className=' w-100 m-2 btn bg-outline-accent text-light'> Github </button>
-                        <button className=' w-100 m-2 btn bg-outline-accent text-light'> Linkedin </button>
+                    <div className='Links-Container-Mobile justify-content-center align-items-center'>
+                        {/* <button className=' w-100 m-2 btn bg-outline-accent text-light'> Resume </button> */}
+                        <button className='w-100 m-2 btn bg-outline-accent text-light' onClick={e => { e.preventDefault();  window.open('https://github.com/riectivnoodes/portfolio')}}> Github </button>
+                        <button className='w-100 m-2 btn bg-outline-accent text-light' onClick={e => { e.preventDefault();  window.open('https://www.linkedin.com/in/joe-walker-89312a22a/')}}> Linkedin </button>
                     </div>
                 </>
             )
@@ -93,7 +72,7 @@ const Main = () => {
             return (
                 <>
                     <div className='Links-Container'>
-                        <button className=' w-100 btn bg-outline-accent text-light'> Resume </button>
+                        {/* <button className=' w-100 btn bg-outline-accent text-light'> Resume </button> */}
                         <div>
                         </div>
                     </div>
@@ -106,10 +85,10 @@ const Main = () => {
         return (
             <Fragment>
                 <div className={`${isMobile ? 'MainFlex' : 'MainFlexMobile'}`}>
-                    <div className='d-flex flex-row justify-content-center align-items-center flex-wrap text-light'>
+                    <div className='animated-flex d-flex flex-row justify-content-center align-items-center flex-wrap text-light'>
                         <div className={`${isMobile ? 'Main-welcomeContainer ' : 'Main-welcomeContainerMobile'}`}>
                             <span className='d-flex flex-row'><h1>I am Joseph Walker</h1><div className='text-border-outline'><h1>.</h1></div></span>
-                            <p className='text-accent'>React | Web3 | Solidity | Node</p>
+                            <p className='text-accent'>React | Web3 | Solidity | Node | Express</p>
                         </div>
 
                         <div className='Main-welcomeContainer rounded m-5 d-flex p-3 flex-column justify-content-center align-items-center'>
@@ -122,8 +101,13 @@ const Main = () => {
                 <SideBar />
                 <CanvasShapes />
                 <Messenger />
-                <div className='OnHoverShowCode text-accent' onMouseEnter={e => { e.preventDefault(); setToggle(true) }}>
-                    View Background Code!
+                <div className='OnHoverShowCode text-accent'
+                    onMouseEnter={
+                        e => {
+                            e.preventDefault(); setToggle(true)
+                        }}>
+                    
+                    View Code!
                 </div>
                 <ShowCode />
             </Fragment>

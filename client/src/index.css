@@ -31,6 +31,7 @@ code {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  background-color: rgb(255, 94, 0);
+  background-color: rgb(152, 182, 145);
   z-index: -10;
+  overflow: hidden;
 }

@@ -1,39 +1,113 @@
-.SectionOneMain{
-    background-color: white;
-    height: 50px;
-    z-index: 1;
-    box-shadow: 0px 0px 100px 40px rgb(0, 0, 0);
-}
-
 .SectionOneLeft{
     background-color: white;
 }
 
 .SectionOne-cardsMain{
     background-color: white;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     z-index: 1;
     padding-bottom: 5%;
-}
-.SectionOne-Cards{
-    /* background-color: rgb(51, 51, 51); */
-    width: 70%;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-items:center;
-    border-radius: 15px;
-    padding: 3%;
-    /* box-shadow: inset 0px 0px 100px 10px rgba(0, 0, 0, 0.719); */
+    height: 100%;
+    width: 100%;
+    overflow: scroll;
 }
 
-.SectionOne-Card{
+.SectionOne-Card-Mobile{
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
     margin: 3%;
-    width: 40%;
-    min-width: 300px;
+    width: 100%;
+    min-width: 350px;
+    height: 600px;
+    background-color: rgb(54, 54, 54);
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.719);
+    border-radius: 15px;
+    padding: 3%;
+    animation: cardEntering 1s;
+}
+
+.SectionOne-Card-1{
+    display: flex;
+    position:relative;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: 3%;
+    width: 80%;
+    height: 600px;
+    background-color: rgb(54, 54, 54);
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.719);
+    background-size: 500px 500px;
+    background-position: center;
+    border-radius: 15px;
+    padding: 3%;
+    animation: cardEntering 1s;
+}
+
+.SectionOne-Card-2{
+    display: flex;
+    position:relative;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: 3%;
+    width: 80%;
+    height: 600px;
+    background-color: rgb(54, 54, 54);
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.719);
+    background-size: 500px 500px;
+    background-position: center;
+    border-radius: 15px;
+    padding: 3%;
+    animation: cardEntering 1s;
+}
+
+.SectionOne-Card-3{
+    display: flex;
+    position:relative;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: 3%;
+    width: 80%;
+    height: 600px;
+    background-color: rgb(54, 54, 54);
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.719);
+    background-size: 500px 500px;
+    background-position: center;
+    border-radius: 15px;
+    padding: 3%;
+    animation: cardEntering 1s;
+}
+
+
+@keyframes cardEntering {
+    from {
+        transform:translateX(500px);
+        opacity: 0%;
+    }
+    to {
+        transform:translateX(0px);
+        opactity: 100%;
+    }
+}
+
+.tesetButton {
+    z-index: 10000;
+}
+.SectionOne-Card-Leaving{
+    display: flex;
+    position:relative;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: 3%;
+    width: 400px;
+    min-width: 400px;
     height: 600px;
     max-height: max-content;
     background-color: rgb(54, 54, 54);
@@ -42,6 +116,18 @@
     background-position: center;
     border-radius: 15px;
     padding: 3%;
+    animation: cardLeaving 1s;
+}
+
+@keyframes cardLeaving {
+    from {
+        transform:translateX(0px);
+        opacity: 100%;
+    }
+    to {
+        transform:translateX(-500px);
+        opactity: 0%;
+    }
 }
 
 .redfoxinu-img{

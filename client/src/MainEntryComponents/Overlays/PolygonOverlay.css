@@ -1,5 +1,5 @@
 .rootPolygonOverlay{
-    background-image:url(../Images/PolygonOverlay.svg);
+    background-image:url(../../Images/PolygonOverlay.svg);
     background-repeat: no-repeat;
     background-size: 230%;
     background-position: bottom;
@@ -12,7 +12,7 @@
 }
 
 .rootPolygonOverlayInverted{
-background-image:url(../Images/PolygonOverlay.svg);
+background-image:url(../../Images/PolygonOverlay.svg);
 background-repeat: no-repeat;
 background-size: 230%;
 background-position: bottom;

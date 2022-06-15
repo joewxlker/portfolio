@@ -3,11 +3,7 @@ import { useEffect } from 'react';
 import './PopupMessengerMobile.css';
 import { useGetMessages, useSetActive, useSetForm, useSetUserAddress } from './MessengerHooks/setUserData';
 
-export const PopupMessageHistoryMobile = () => {
-    return <HandleMessageHistoryMobile addressTo = '0x2D9d35fAF446dDBa48173811bD9707E53A55fC03' addressFrom= '0x51C7dEa8167E3dD72A25499Ad4e9850dA0907450' popup='true'/>
-}
-
-export const HandleMessageHistoryMobile = (props) => {
+export const PopupMessageHistoryMobile = (props) => {
 
     console.log(props.addressTo, props.addressFrom, props.popup)
 
@@ -16,16 +12,9 @@ export const HandleMessageHistoryMobile = (props) => {
     const [friendCode, setFriendCode] = useState();
     const [messages, setMessages] = useState();
 
-    let _address
-    let _activeChat
-
-    if (props.addressTo !== undefined) {
-        _address = props.addressTo;
-    }
-
-    if (props.addressFrom !== undefined) {
-        _activeChat = props.addressFrom;
-    }
+    const address = useSetUserAddress();
+    let _address = address
+    let _activeChat = '0x51C7dEa8167E3dD72A25499Ad4e9850dA0907450'
 
     const getFriendCode = () => {
         // if (address !== undefined && activeChat !== undefined) console.log('useSetFriendCode', friendCode);

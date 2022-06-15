@@ -1,13 +1,10 @@
 import React, { Component, Fragment, useState } from 'react'
 import { useEffect } from 'react';
 // import '../Messenger.css'
+import './PopupMessenger.css'
 import { useGetMessages, useSetActive, useSetForm, useSetUserAddress } from './MessengerHooks/setUserData';
 
-export const PopupMessegeHistory = () => {
-    return <HandleMessageHistory addressTo = '0x2D9d35fAF446dDBa48173811bD9707E53A55fC03' addressFrom= '0x51C7dEa8167E3dD72A25499Ad4e9850dA0907450' popup='true'/>
-}
-
-export const HandleMessageHistory = (props) => {
+export const PopupMessegeHistory = (props) => {
 
     console.log(props.addressTo, props.addressFrom, props.popup)
 
@@ -15,21 +12,11 @@ export const HandleMessageHistory = (props) => {
     const [loading, setLoading] = useState(false);
     const [friendCode, setFriendCode] = useState();
     const [messages, setMessages] = useState();
-
-    let _address
-    let _activeChat
-
     const address = useSetUserAddress();
-    _address = address
-    if (props.addressTo !== undefined) {
-        _address = props.addressTo;
-    }
 
-    const activeChat = useSetActive();
-    _activeChat = activeChat;
-    if (props.addressFrom !== undefined) {
-        _activeChat = props.addressFrom;
-    }
+    let _address = address
+    let _activeChat = '0x51C7dEa8167E3dD72A25499Ad4e9850dA0907450'
+
 
     const getFriendCode = () => {
         // if (address !== undefined && activeChat !== undefined) console.log('useSetFriendCode', friendCode);
@@ -46,7 +33,7 @@ export const HandleMessageHistory = (props) => {
 
     useEffect(() => {
         getFriendCode();
-    }, [address, activeChat]);
+    }, [address, _activeChat]);
 
     // const [undefinedMessages, setUndefinedMessages] = useState(false);
     // const address = useSetUserAddress();
@@ -99,7 +86,7 @@ export const HandleMessageHistory = (props) => {
                                 return (
                                     <>
                                         <div className='bg-light m-3 text-dark p-2 badge d-flex flex-column justify-content-start w-50'>
-                                            <div className='text-dark'>sent from: {message[1]}</div>
+                                            <div className='message-container text-dark'>sent from: {message[1]}</div>
                                             {message[0]}
                                         </div>
                                     </>
@@ -111,7 +98,7 @@ export const HandleMessageHistory = (props) => {
                                 return (
                                     <>
                                         <div className='bg-light m-3 text-dark p-2 badge d-flex flex-column justify-content-start w-50'>
-                                            <div className='text-dark'>sent from: {message[1]}</div>
+                                            <div className='text-dark message-container'>sent from: {message[1]}</div>
                                             {message[0]}
                                         </div>
                                     </>
@@ -142,7 +129,7 @@ export const HandleMessageHistory = (props) => {
             body: JSON.stringify({ sender: _address, receiver: _activeChat, message: value.message })
         })
             .then((res) => res.json())
-            .then((data) => { alert(JSON.stringify(data));alert('Refresh your browser to see updates'); setLoading(false); });
+            .then((data) => { alert(JSON.stringify(data)); window.location.reload(); setLoading(false); });
     };
 
     if (_activeChat !== undefined) { // we use conditional rendering here to either display the message history and active receiver to the user

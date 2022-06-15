@@ -43,18 +43,6 @@ class PopupMessenger extends Component {
                 <header className='PopupMessenger-Header-Closed bg-accent text-light'>
                     <button className='btn w-100 h-100' onClick={(e) => { e.preventDefault(); this.setState({ open: false }) }}></button>
                 </header>
-                <p className='m-1 p-1 badge text-light bg-dark d-flex'>
-                    This messenger uses web3/Blockchain technology to
-                    <br /> generate bytecodes and send message data between accounts
-                    <br />It is currently in its early stages of development and requires
-                    <br />refreshing the page to see updates
-                    <br /> It also features no form of update system yet, therefore it may be best to
-                    <br /> send your contact details and I can contact you elsewhere once I see this message
-                </p>
-                <div className=' m-1 p-1 badge text-light d-flex justify-content-center bg-accent flex-wrap d-flex flex-column justify-content-center align-items-center'>
-                    <span>See how I made this <a href='https://github.com/riectivnoodes/portfolio.git'>Here</a></span>
-                    <span>If you wish to contact me using you're own ethereum <br/> address you can make an account <Link to='/Login'>Here</Link></span>
-                </div>
                 <PopupMessegeHistory />
             </>
             );

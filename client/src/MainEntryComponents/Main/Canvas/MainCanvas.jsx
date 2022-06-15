@@ -1,7 +1,7 @@
 import  React from 'react';
 import { Fragment, useEffect } from 'react';
-import polygon from '../Images/PolygonBlack.svg'
-import './Main.css'
+import polygon from '../../../Images/PolygonBlack.svg'
+import '../Main.css'
 
 class CanvasShapes extends React.Component {
 
@@ -19,7 +19,6 @@ class CanvasShapes extends React.Component {
             let ctx2 = c.getContext('2d')
             var path = new Path2D();
             var path2 = new Path2D();
-            if(c === null) return
             ctx.fillStyle = 'rgba(37, 37, 37, 0.6)';
             path.rect(randomNumX,randomNumY,randomNumY,randomNumX)
             ctx.fill(path);
@@ -31,6 +30,7 @@ class CanvasShapes extends React.Component {
 
         const deleteShapes = () => {
             let canvas = canvasRef.current
+            if (canvas === null) return
             let ctx = canvas.getContext('2d')
             let path3 = new Path2D();
             path3.rect(canvas.width,canvas.height,canvas.width, canvas.height)
