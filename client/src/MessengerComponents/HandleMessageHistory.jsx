@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import { useEffect } from 'react';
 import './PopupMessenger.css'
-import { useSetForm, useSetUserAddress } from './MessengerHooks/setUserData';
+import { useSetForm } from './MessengerHooks/setUserData';
 
 export const PopupMessegeHistory = () => {
 
@@ -9,13 +9,20 @@ export const PopupMessegeHistory = () => {
     const [loading, setLoading] = useState(false);
     const [friendCode, setFriendCode] = useState();
     const [messages, setMessages] = useState();
-    const address = useSetUserAddress();
     let _activeChat = '0x51C7dEa8167E3dD72A25499Ad4e9850dA0907450'
+    const [address, setAddress] = useState()
 
     useEffect(() => {
-        if (address === undefined) { return };
-        if (_activeChat === undefined) { return };
-        fetch('https://josephsportfolio.herokuapp.com/api/friendCode', {
+        const getAddy = async () => {
+            let accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            let account = accounts[0]
+            setAddress(account)
+        }
+        getAddy();
+    }, [address])
+    
+    useEffect(() => {
+        fetch('/api/friendCode', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ sender: address, receiver: _activeChat })
@@ -25,9 +32,7 @@ export const PopupMessegeHistory = () => {
     }, [address, _activeChat]);
 
     useEffect(() => {
-        if (friendCode === undefined) { return }; 
-        // console.log('getting messages')
-        fetch('https://josephsportfolio.herokuapp.com/api/getMessages', {
+        fetch('/api/getMessages', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ friendCode: friendCode })
@@ -105,10 +110,8 @@ export const PopupMessegeHistory = () => {
         // in that case the user will be required to process their own transactions manually using their web3 provider
         // attempting to send multiple transactions from the same _address requires gas/nonce handling
         event.preventDefault();
-        if (address === undefined) { return };
-        if (_activeChat === undefined) { return };
         setLoading(true)
-        await fetch('https://josephsportfolio.herokuapp.com/api/sendMessage', {
+        await fetch('/api/sendMessage', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ sender: address, receiver: _activeChat, message: value.message })
