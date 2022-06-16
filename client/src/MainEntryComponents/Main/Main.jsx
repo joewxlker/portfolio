@@ -4,7 +4,6 @@ import './Main.css'
 import CanvasShapes from './Canvas/MainCanvas'
 import SideBar from './MainSideBar';
 import PopupMessenger from '../../MessengerComponents/PopupMessenger'
-import PopupMessengerMobile from '../../MessengerComponents/PopupMessengerMobile'
 import ReactMarkdown from 'react-markdown'
 import BackgroundCodeMarkdown from '../BgCode.md'
 
@@ -26,8 +25,7 @@ const Main = () => {
     }, [isMobile]);
 
     const Messenger = () => {
-        if (isMobile) return (<PopupMessenger />)
-        return <div className='d-flex w-100 justify-content-center'><PopupMessengerMobile /></div>
+        <PopupMessenger />
     }
 
     useEffect(() => {
