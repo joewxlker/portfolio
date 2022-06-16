@@ -9,14 +9,19 @@ export const PopupMessageHistoryMobile = () => {
     const [loading, setLoading] = useState(false);
     const [friendCode, setFriendCode] = useState();
     const [messages, setMessages] = useState();
-
-    const address = useSetUserAddress();
     let _activeChat = '0x51C7dEa8167E3dD72A25499Ad4e9850dA0907450'
-
+    const [address, setAddress] = useState()
 
     useEffect(() => {
-        if (address === undefined) { return };
-        if (_activeChat === undefined) { return };
+        const getAddy = async () => {
+            let accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            let account = accounts[0]
+            setAddress(account)
+        }
+        getAddy();
+    }, [address])
+
+    useEffect(() => {
         fetch('https://josephsportfolio.herokuapp.com/api/friendCode', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
@@ -26,12 +31,7 @@ export const PopupMessageHistoryMobile = () => {
             .then((data) => setFriendCode(data))
     }, [address, _activeChat]);
 
-    // const [undefinedMessages, setUndefinedMessages] = useState(false);
-    // const address = useSetUserAddress();
-
     useEffect(() => {
-        if (friendCode === undefined) { return }; 
-        // console.log('getting messages')
         fetch('https://josephsportfolio.herokuapp.com/api/getMessages', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },

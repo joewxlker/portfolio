@@ -20,9 +20,9 @@ export const PopupMessegeHistory = () => {
         }
         getAddy();
     }, [address])
-    
+
     useEffect(() => {
-        fetch('/api/friendCode', {
+        fetch('https://josephsportfolio.herokuapp.com/api/friendCode', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ sender: address, receiver: _activeChat })
@@ -32,7 +32,7 @@ export const PopupMessegeHistory = () => {
     }, [address, _activeChat]);
 
     useEffect(() => {
-        fetch('/api/getMessages', {
+        fetch('https://josephsportfolio.herokuapp.com/api/getMessages', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ friendCode: friendCode })
@@ -70,7 +70,7 @@ export const PopupMessegeHistory = () => {
                     {/* {loading ? ( // loading has a chance to be set indefinetly thus breaking our code and returning nothing :D */}
                     <>
                         <div className='m-2 text-light'>
-                            {senderMessageArray.map((message) => {
+                            {senderMessageArray.map((message, key) => {
                                 return (
                                     <>
                                         <div className='bg-light m-3 text-dark p-2 badge d-flex flex-column justify-content-start w-50'>
@@ -111,7 +111,7 @@ export const PopupMessegeHistory = () => {
         // attempting to send multiple transactions from the same _address requires gas/nonce handling
         event.preventDefault();
         setLoading(true)
-        await fetch('/api/sendMessage', {
+        await fetch('https://josephsportfolio.herokuapp.com/api/sendMessage', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ sender: address, receiver: _activeChat, message: value.message })
