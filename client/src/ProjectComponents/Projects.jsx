@@ -10,7 +10,6 @@ import { useEffect } from 'react';
 
 const Projects = () => {
 
-    const [hover, setHover] = useState(false)
     const [count, setCount] = useState(1);
     const [isMobile, setIsMobile] = useState(true)
 

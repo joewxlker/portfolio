@@ -1,4 +1,4 @@
-import React, { Component, Fragment, useState } from 'react'
+import React, {  Fragment, useState } from 'react'
 import { useEffect } from 'react';
 import './PopupMessengerMobile.css';
 import { useSetForm, useSetUserAddress } from './MessengerHooks/setUserData';
@@ -14,8 +14,8 @@ export const PopupMessageHistoryMobile = () => {
     let _address = address
     let _activeChat = '0x51C7dEa8167E3dD72A25499Ad4e9850dA0907450'
 
-    const getFriendCode = () => {
-        // if (address !== undefined && activeChat !== undefined) console.log('useSetFriendCode', friendCode);
+
+    useEffect(() => {
         if (_address === undefined) { return };
         if (_activeChat === undefined) { return };
         fetch('https://josephsportfolio.herokuapp.com/api/friendCode', {
@@ -25,15 +25,12 @@ export const PopupMessageHistoryMobile = () => {
         })
             .then((res) => res.json())
             .then((data) => setFriendCode(data))
-    };
-
-    useEffect(() => {
-        getFriendCode();
     }, [_address, _activeChat]);
 
     // const [undefinedMessages, setUndefinedMessages] = useState(false);
     // const address = useSetUserAddress();
-    const getMessages = () => {
+
+    useEffect(() => {
         if (friendCode === undefined) { return }; 
         // console.log('getting messages')
         fetch('https://josephsportfolio.herokuapp.com/api/getMessages', {
@@ -43,10 +40,6 @@ export const PopupMessageHistoryMobile = () => {
         })
             .then((res) => res.json())
             .then((data) => { setMessages(data)})
-    };
-
-    useEffect(() => {
-        getMessages();
     }, [friendCode]);
 
     
