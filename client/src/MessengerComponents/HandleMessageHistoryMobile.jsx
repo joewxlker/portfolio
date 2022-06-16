@@ -111,6 +111,8 @@ export const PopupMessageHistoryMobile = () => {
         // in that case the user will be required to process their own transactions manually using their web3 provider
         // attempting to send multiple transactions from the same _address requires gas/nonce handling
         event.preventDefault();
+        if (_address === undefined) { return };
+        if (_activeChat === undefined) { return };
         setLoading(true)
         await fetch('https://josephsportfolio.herokuapp.com/api/sendMessage', {
             method: 'post',
