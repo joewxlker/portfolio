@@ -24,7 +24,7 @@ export const PopupMessegeHistory = () => {
         })
             .then((res) => res.json())
             .then((data) => setFriendCode(data))
-    }, [_address, _activeChat]);
+    }, [address, _activeChat]);
 
     useEffect(() => {
         if (friendCode === undefined) { return }; 
@@ -36,7 +36,7 @@ export const PopupMessegeHistory = () => {
         })
             .then((res) => res.json())
             .then((data) => { setMessages(data)})
-    }, [_address,friendCode]);
+    }, [address,friendCode]);
 
     
     

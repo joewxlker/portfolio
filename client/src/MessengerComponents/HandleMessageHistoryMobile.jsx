@@ -25,7 +25,7 @@ export const PopupMessageHistoryMobile = () => {
         })
             .then((res) => res.json())
             .then((data) => setFriendCode(data))
-    }, [_address, _activeChat]);
+    }, [address, _activeChat]);
 
     // const [undefinedMessages, setUndefinedMessages] = useState(false);
     // const address = useSetUserAddress();
@@ -40,7 +40,7 @@ export const PopupMessageHistoryMobile = () => {
         })
             .then((res) => res.json())
             .then((data) => { setMessages(data)})
-    }, [_address,friendCode]);
+    }, [address,friendCode]);
 
     
     
