@@ -3,9 +3,7 @@ import { useEffect } from 'react';
 import './PopupMessenger.css'
 import { useSetForm, useSetUserAddress } from './MessengerHooks/setUserData';
 
-export const PopupMessegeHistory = (props) => {
-
-    console.log(props.addressTo, props.addressFrom, props.popup)
+export const PopupMessegeHistory = () => {
 
     const [value, setForm] = useSetForm();
     const [loading, setLoading] = useState(false);
