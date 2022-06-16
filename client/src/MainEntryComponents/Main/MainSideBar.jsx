@@ -1,5 +1,4 @@
-import { Component, useEffect, useState } from "react";
-import linkedin from '../../Images/linkedin-svgrepo-com.svg'
+import { useEffect, useState } from "react";
 import './MainSideBar.css'
 import './Main.css'
 
@@ -17,7 +16,7 @@ const SideBar = () => {
             if (window.innerWidth < 600) setIsMobile(false)
             if (window.innerWidth > 600) setIsMobile(true)
         });
-    }, []);
+    }, [isMobile]);
 
     // const ShowSettingsMenu = () => {
     //     if (settings) {
@@ -43,7 +42,7 @@ const SideBar = () => {
                 <>
                     <div className='About-Open p-2 rounded text-light align-items-center d-flex flex-column justify-content-center'>
                     <div>
-                        <img src='' alt='profile picture'></img>
+                        <img src='' alt='profile'></img>
                             <h2>About me</h2>
                             <p>Fullstack Developer</p>
 

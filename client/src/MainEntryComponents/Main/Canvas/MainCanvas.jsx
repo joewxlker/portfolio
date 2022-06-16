@@ -1,5 +1,5 @@
 import  React from 'react';
-import { Fragment, useEffect } from 'react';
+import { Fragment } from 'react';
 import polygon from '../../../Images/PolygonBlack.svg'
 import '../Main.css'
 

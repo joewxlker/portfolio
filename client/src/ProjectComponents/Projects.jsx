@@ -1,8 +1,6 @@
-import React, { Component } from 'react'
-import { Fragment } from 'react'
+import React from 'react'
 import './Projects.css'
 import PolygonOverlayInverted from '../MainEntryComponents/Overlays/PolygonOverlayInverted'
-import { redfoxinu } from '../Images/Images';
 import { RedFoxInuCard, RedFoxInuMobile } from './Cards/RedFoxInuCard'
 import { Web3Messenger,Web3MessengerMobile } from './Cards/Web3Messenger.jsx'
 import { Shopify, ShopifyMobile } from './Cards/ShopifyCard';
@@ -24,7 +22,7 @@ const Projects = () => {
             if (window.innerWidth < 600) setIsMobile(false)
             if (window.innerWidth > 600) setIsMobile(true)
         });
-    }, []);
+    }, [isMobile]);
 
     const Carousel = () => {
         if (count === undefined) return

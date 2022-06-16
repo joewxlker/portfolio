@@ -22,7 +22,7 @@ export const useSetUserAddress = () => {
         if (address === undefined) {
             requestAccount();
         }
-    }, [address])
+    }, [address,requestAccount])
     return address
 }
 
@@ -47,7 +47,7 @@ export const useUserInfo = () => {
 
         useEffect(() => {
             getUserInfo();
-        }, [address])
+        }, [address,getUserInfo])
 
         return userInfo
 }
@@ -67,7 +67,7 @@ export const useAllUsers = () => {
     }
         useEffect(() => {
             getAllUsers();
-        }, [])
+        }, [allUsers])
         return allUsers;
 }
 
@@ -88,7 +88,7 @@ export const useSetActive = () => {
     };
     useEffect(() => {
         fetchActive();
-    }, [address])
+    }, [address, fetchActive])
     
     return activeChat
 
@@ -115,7 +115,7 @@ export const useSetFriendsArray = () => {
     }
     useEffect(() => {
         fetchFriends();
-    }, [address])
+    }, [address,fetchFriends])
 
     return [friends];
 }

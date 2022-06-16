@@ -1,9 +1,7 @@
 import './PopupMessenger.css'
-import { useSetForm } from './MessengerHooks/setUserData'
 import { Component } from 'react'
 import { createRef } from 'react'
 import {PopupMessegeHistory} from './HandleMessageHistory'
-import { Link } from 'react-router-dom'
 
 class PopupMessenger extends Component {
 

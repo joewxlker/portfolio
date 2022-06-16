@@ -1,6 +1,5 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './header.css'
-import { Link } from 'react-router-dom';
 
 const Header = () => {
 
@@ -13,7 +12,7 @@ const Header = () => {
             if (window.innerWidth < 600) setIsMobile(false)
             if (window.innerWidth > 600) setIsMobile(true)
         });
-    }, []);
+    }, [isMobile]);
 
     const goToTop = (event) => {
         event.preventDefault()

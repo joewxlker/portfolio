@@ -1,11 +1,9 @@
 import React, { Component, Fragment, useState } from 'react'
 import { useEffect } from 'react';
 import './PopupMessengerMobile.css';
-import { useGetMessages, useSetActive, useSetForm, useSetUserAddress } from './MessengerHooks/setUserData';
+import { useSetForm, useSetUserAddress } from './MessengerHooks/setUserData';
 
-export const PopupMessageHistoryMobile = (props) => {
-
-    console.log(props.addressTo, props.addressFrom, props.popup)
+export const PopupMessageHistoryMobile = () => {
 
     const [value, setForm] = useSetForm();
     const [loading, setLoading] = useState(false);
@@ -20,7 +18,7 @@ export const PopupMessageHistoryMobile = (props) => {
         // if (address !== undefined && activeChat !== undefined) console.log('useSetFriendCode', friendCode);
         if (_address === undefined) { return };
         if (_activeChat === undefined) { return };
-        fetch('/api/friendCode', {
+        fetch('https://josephsportfolio.herokuapp.com/api/friendCode', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ sender: _address, receiver: _activeChat })
@@ -38,7 +36,7 @@ export const PopupMessageHistoryMobile = (props) => {
     const getMessages = () => {
         if (friendCode === undefined) { return }; 
         // console.log('getting messages')
-        fetch('/api/getMessages', {
+        fetch('https://josephsportfolio.herokuapp.com/api/getMessages', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ friendCode: friendCode })

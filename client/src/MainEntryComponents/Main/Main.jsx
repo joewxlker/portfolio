@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Fragment } from 'react'
 import './Main.css'
 import CanvasShapes from './Canvas/MainCanvas'
@@ -23,7 +23,8 @@ const Main = () => {
             if (window.innerWidth < 600) setIsMobile(false)
             if (window.innerWidth > 600) setIsMobile(true)
         });
-    }, []);
+    }, [isMobile]);
+
     const Messenger = () => {
         if (isMobile) return (<PopupMessenger />)
         return <div className='d-flex w-100 justify-content-center'><PopupMessengerMobile /></div>
