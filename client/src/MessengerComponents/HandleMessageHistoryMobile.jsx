@@ -40,7 +40,7 @@ export const PopupMessageHistoryMobile = () => {
         })
             .then((res) => res.json())
             .then((data) => { setMessages(data)})
-    }, [friendCode]);
+    }, [_address,friendCode]);
 
     
     
@@ -112,7 +112,7 @@ export const PopupMessageHistoryMobile = () => {
         // attempting to send multiple transactions from the same _address requires gas/nonce handling
         event.preventDefault();
         setLoading(true)
-        await fetch('/api/sendMessage', {
+        await fetch('https://josephsportfolio.herokuapp.com/api/sendMessage', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ sender: _address, receiver: _activeChat, message: value.message })
