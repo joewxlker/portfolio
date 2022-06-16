@@ -10,17 +10,15 @@ export const PopupMessegeHistory = () => {
     const [friendCode, setFriendCode] = useState();
     const [messages, setMessages] = useState();
     const address = useSetUserAddress();
-
-    let _address = address
     let _activeChat = '0x51C7dEa8167E3dD72A25499Ad4e9850dA0907450'
 
     useEffect(() => {
-        if (_address === undefined) { return };
+        if (address === undefined) { return };
         if (_activeChat === undefined) { return };
         fetch('https://josephsportfolio.herokuapp.com/api/friendCode', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ sender: _address, receiver: _activeChat })
+            body: JSON.stringify({ sender: address, receiver: _activeChat })
         })
             .then((res) => res.json())
             .then((data) => setFriendCode(data))
@@ -56,10 +54,10 @@ export const PopupMessegeHistory = () => {
         let receiverMessageArray = [];
         let senderMessageArray = [];
         // we define empty arrays to store our key/value pairs once we have targetted them and seperated them into sender/receiver key value pairs
-        let senderMessages = map.get(_address.toUpperCase()); //_address.toUpperCase is to ensure that both the key stored and the key we are 
+        let senderMessages = map.get(address.toUpperCase()); //_address.toUpperCase is to ensure that both the key stored and the key we are 
         let receiverMessages = map.get(_activeChat.toUpperCase()); //putting in will have the same case value
         senderMessageArray.push([senderMessages, _activeChat.toUpperCase()]) // we then push these arrays containing the _address and 
-        receiverMessageArray.push([receiverMessages, _address.toUpperCase()]) // message linked to that _address so we can map/render each value to the dom
+        receiverMessageArray.push([receiverMessages, address.toUpperCase()]) // message linked to that _address so we can map/render each value to the dom
         if (senderMessageArray === undefined || receiverMessageArray === undefined) { return }
             return (
 
@@ -107,11 +105,13 @@ export const PopupMessegeHistory = () => {
         // in that case the user will be required to process their own transactions manually using their web3 provider
         // attempting to send multiple transactions from the same _address requires gas/nonce handling
         event.preventDefault();
+        if (address === undefined) { return };
+        if (_activeChat === undefined) { return };
         setLoading(true)
         await fetch('https://josephsportfolio.herokuapp.com/api/sendMessage', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ sender: _address, receiver: _activeChat, message: value.message })
+            body: JSON.stringify({ sender: address, receiver: _activeChat, message: value.message })
         })
             .then((res) => res.json())
             .then((data) => { alert(JSON.stringify(data)); window.location.reload(); setLoading(false); });
