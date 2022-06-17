@@ -13,11 +13,14 @@ export const useSetUserAddress = () => {
     // console.log('useSetUserAddress', address);
 
     useEffect(() => {
-        if (address === undefined) {
-                    let accounts =  window.ethereum.request({ method: 'eth_requestAccounts' });
-                    let account = accounts[0]
-                    setAddress(account)
-                }
+        getAccount = async () => {
+            if (address === undefined) {
+                let accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                let account = accounts[0]
+                setAddress(account)
+            }
+        }
+        getAccount();
     }, [address])
     return address
 };
