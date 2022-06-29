@@ -24,10 +24,6 @@ const Main = () => {
         });
     }, [isMobile]);
 
-    const Messenger = () => {
-        <PopupMessenger />
-    }
-
     useEffect(() => {
         fetch(BackgroundCodeMarkdown).then(res => res.text()).then((text) => setMarkdown(text));
     }, [markdown])
@@ -99,7 +95,7 @@ const Main = () => {
                 <MainLinks />
                 <SideBar />
                 <CanvasShapes />
-                <Messenger />
+                <PopupMessenger />
                 <div className='OnHoverShowCode text-accent'
                     onMouseEnter={
                         e => {
@@ -128,7 +124,6 @@ const Main = () => {
             </div>
         
         </div>
-        <Messenger />
     </Fragment>
     )
 } 

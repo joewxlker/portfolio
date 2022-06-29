@@ -18,6 +18,10 @@ code {
     monospace;
 }
 
+h4{
+  text-align:center;
+  font-weight:500;
+}
 #root{
   /* height: 4000px; */
   margin: 0%;
@@ -25,8 +29,8 @@ code {
   justify-content: top;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  max-width: 100%;
+  width: 100vw;
+  max-width: 100vw;
   background:linear-gradient(180deg, rgba(6, 3, 7, 0.932),rgba(6, 3, 7, 0.593), rgba(6, 3, 7, 0.63), rgba(0, 0, 0, 0.744));
   background-position: center;
   background-size: cover;

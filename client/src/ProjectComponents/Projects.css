@@ -56,7 +56,7 @@
     align-items: center;
     margin: 3%;
     width: 80%;
-    height: 600px;
+    height: 650px;
     background-color: rgb(54, 54, 54);
     box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.719);
     background-size: 500px 500px;
@@ -74,7 +74,7 @@
     align-items: center;
     margin: 3%;
     width: 80%;
-    height: 600px;
+    height: 700px;
     background-color: rgb(54, 54, 54);
     box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.719);
     background-size: 500px 500px;
@@ -96,9 +96,6 @@
     }
 }
 
-.tesetButton {
-    z-index: 10000;
-}
 .SectionOne-Card-Leaving{
     display: flex;
     position:relative;
@@ -131,12 +128,15 @@
 }
 
 .redfoxinu-img{
-    width: 100%;
-    height: 250px;
+    width: 70%;
+    height: 350px;
+    display: block;
+    z-index: 100;
+    border-radius: 10px;
 }
 
 .Live-Preview-button{
-    width: 80%;
+    width: 60%;
 }
 
 .SectionOne-Card-Summary{
