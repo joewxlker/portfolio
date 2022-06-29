@@ -1,7 +1,7 @@
 .Contact-Form-Main{
     position: relative;
     height: 500px;
-    width: 100%;
+    width: 50%;
     padding-top: 10%;
 }
 
@@ -28,3 +28,21 @@
 .linkedin-link{
     cursor: pointer;
 }
+
+
+.contact-form-right{
+    z-index: 4;
+    border-left: 3px solid black 
+}
+
+@media only screen and (max-width: 600px) {
+    .contact-form-right{
+       display: none;
+    }
+    .Contact-Form-Main{
+        position: relative;
+        height: 500px;
+        width: 100%;
+        padding-top: 10%;
+    }
+  }
