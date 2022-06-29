@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from 'react'
 import { useEffect } from 'react';
 import './PopupMessenger.css'
-import useSetForm from './MessengerHooks/setUserData';
-import useSetUserAddress from './MessengerHooks/setAddress';
-import useCheckExists from './MessengerHooks/setCheckExists';
+import useSetForm from '../MessengerHooks/setUserData';
+import useSetUserAddress from '../MessengerHooks/setAddress';
+import useCheckExists from '../MessengerHooks/setCheckExists';
 
 export const PopupMessegeHistory = () => {
 

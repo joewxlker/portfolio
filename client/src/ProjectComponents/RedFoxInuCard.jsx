@@ -1,5 +1,5 @@
-import '../Projects.css'
-import RedFoxImage from '../../Images/redfoxinuss.png'
+import './Projects.css'
+import RedFoxImage from '../Images/redfoxinuss.png'
 
 export const RedFoxInuCard = () => {
     return (

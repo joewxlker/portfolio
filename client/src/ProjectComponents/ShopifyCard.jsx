@@ -1,5 +1,5 @@
-import '../Projects.css'
-import webstoreimg from '../../Images/sebstorepreview.gif'
+import './Projects.css'
+import webstoreimg from '../Images/sebstorepreview.gif'
 
 export const Shopify = () => {
     return (

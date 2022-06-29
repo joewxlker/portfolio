@@ -1,5 +1,5 @@
 import './NotFound.css'
-import MainCanvas from '../MainEntryComponents/Main/Canvas/MainCanvas'
+import MainCanvas from '../CanvasComponents/MainCanvas'
 import { Link } from 'react-router-dom';
 const NotFound = () => {
   

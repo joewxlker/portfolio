@@ -1,12 +1,12 @@
 
 import React from 'react'
-import Main from './MainEntryComponents/Main/Main.jsx'
+import Main from './MainEntryComponents/Main.jsx'
 import { Fragment } from 'react';
-// import Header from './MainEntryComponents/Header/Header.jsx'
-// import PolygonOverlay from './MainEntryComponents/Overlays/PolygonOverlay'
-// import Projects from './ProjectComponents/Projects'
-// import ContactForm from './ContactComponents/ContactForm';
-// import SolutionsMain from './SolutionsComponents/SolutionsMain';
+import Header from './Header/Header.jsx'
+import PolygonOverlay from './Overlays/PolygonOverlay'
+import Projects from './ProjectComponents/Projects'
+import ContactForm from './ContactComponents/ContactForm';
+import SolutionsMain from './SolutionsComponents/SolutionsMain';
 
 
 const App = () => {
@@ -14,12 +14,12 @@ const App = () => {
     return (
       <Fragment>
         <h1>hello</h1>
-        {/* <Header /> */}
-        {/* <Main /> */}
-        {/* <PolygonOverlay /> */}
-        {/* <Projects /> */}
-        {/* <SolutionsMain /> */}
-        {/* <ContactForm /> */}
+        <Header />
+        <Main />
+        <PolygonOverlay />
+        <Projects />
+        <SolutionsMain />
+        <ContactForm />
       </Fragment>
     );
   };

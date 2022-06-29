@@ -1,5 +1,5 @@
-import '../Projects.css'
-import retralink from '../../Images/retralink.gif'
+import './Projects.css'
+import retralink from '../Images/retralink.gif'
 
 export const Web3Messenger = () => {
     return (

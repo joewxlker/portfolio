@@ -1,6 +1,6 @@
 import  React from 'react';
 import { Fragment } from 'react';
-import '../Main.css'
+import '../MainEntryComponents/Main.css'
 
 class CanvasShapes extends React.Component {
 

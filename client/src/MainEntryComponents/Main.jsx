@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Fragment } from 'react'
 import './Main.css'
-import CanvasShapes from './Canvas/MainCanvas'
+import CanvasShapes from '../CanvasComponents/MainCanvas'
 import SideBar from './MainSideBar';
-// import PopupMessenger from '../../MessengerComponents/PopupMessenger'
 import ReactMarkdown from 'react-markdown'
-import jsMarkDown from '../BgCode.md'
-import cssMarkDown from '../BgCodeCss.md'
-import jsxMarkDown from '../BgCodeJsx.md'
+import jsMarkDown from './BgCode.md'
+import cssMarkDown from './BgCodeCss.md'
+import jsxMarkDown from './BgCodeJsx.md'
 
 
 const Main = () => {

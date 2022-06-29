@@ -1,10 +1,10 @@
 import React from 'react'
 import './Projects.css'
-import PolygonOverlayInverted from '../MainEntryComponents/Overlays/PolygonOverlayInverted'
-import { RedFoxInuCard, RedFoxInuMobile } from './Cards/RedFoxInuCard'
-import { Web3Messenger,Web3MessengerMobile } from './Cards/Web3Messenger.jsx'
-import { Shopify, ShopifyMobile } from './Cards/ShopifyCard';
-import { Default, DefaultMobile } from './Cards/DefaultCard';
+import PolygonOverlayInverted from '../Overlays/PolygonOverlayInverted'
+import { RedFoxInuCard, RedFoxInuMobile } from './RedFoxInuCard'
+import { Web3Messenger,Web3MessengerMobile } from './Web3Messenger.jsx'
+import { Shopify, ShopifyMobile } from './ShopifyCard';
+import { Default, DefaultMobile } from './DefaultCard';
 import { useState } from 'react';
 import { useEffect } from 'react';
 

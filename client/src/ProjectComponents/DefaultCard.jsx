@@ -1,4 +1,4 @@
-import '../Projects.css'
+import './Projects.css'
 
 export const Default = () => {
     return (
