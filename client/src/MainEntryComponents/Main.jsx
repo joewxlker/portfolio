@@ -26,6 +26,7 @@ const Main = () => {
             if (window.innerWidth < 600) setIsMobile(false)
             if (window.innerWidth > 600) setIsMobile(true)
         });
+        window.removeEventListener('resize')
     }, [isMobile]);
 
     useEffect(() => {

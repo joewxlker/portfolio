@@ -12,7 +12,7 @@ const App = () => {
   
   return (
     <>
-      {/* <Header /> */}
+      <Header />
         <Main />
     <PolygonOverlay /> 
       <Projects />
