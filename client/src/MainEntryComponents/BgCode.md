@@ -1,7 +1,6 @@
     DrawShapes = () => {
 
         const canvasRef = React.createRef();
-        const imgRef = React.createRef();
 
         const drawShapes = () => {
             let randomNumX = Math.floor(Math.random() * 1000)

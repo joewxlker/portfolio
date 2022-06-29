@@ -1,5 +1,4 @@
 
-import './App.css';
 import React from 'react'
 import Main from './MainEntryComponents/Main/Main.jsx'
 import { Fragment } from 'react';
