@@ -1,6 +1,6 @@
 
 import React from 'react'
-// import Main from './MainEntryComponents/Main/Main.jsx'
+import Main from './MainEntryComponents/Main/Main.jsx'
 import { Fragment } from 'react';
 import Header from './MainEntryComponents/Header/Header.jsx'
 // import PolygonOverlay from './MainEntryComponents/Overlays/PolygonOverlay'
@@ -14,7 +14,7 @@ const App = () => {
     return (
       <Fragment>
         <Header />
-        {/* <Main /> */}
+        <Main />
         {/* <PolygonOverlay /> */}
         {/* <Projects /> */}
         {/* <SolutionsMain /> */}
