@@ -43,7 +43,7 @@ const ContactForm = () => {
             <div className='overlayContainer'>
                 <div className='Contact-Form-Overlay bg-dark' />
             </div>
-            <div className='w-100 d-flex flex-row'>
+            <div className='w-100 d-flex flex-row bg-dark'>
                 <div className='Contact-Form-Main d-flex flex-column align-items-center justify-content-center bg-dark'>
                     <h1 className='text-light'>Contact Me</h1>
                     <div className='Form-Container text-accent d-flex flex-column justify-content-center align-items-center'>

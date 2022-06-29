@@ -6,6 +6,7 @@ import PolygonOverlay from './Overlays/PolygonOverlay'
 import Projects from './ProjectComponents/Projects'
 import ContactForm from './ContactComponents/ContactForm';
 import SolutionsMain from './SolutionsComponents/SolutionsMain';
+import Footer from './Footer/Footer'
 
 
 const App = () => {
@@ -13,11 +14,12 @@ const App = () => {
   return (
     <>
       <Header />
-        <Main />
-    <PolygonOverlay /> 
+      <Main />
+      <PolygonOverlay /> 
       <Projects />
       <SolutionsMain />
       <ContactForm />
+      <Footer/>
     </>
   );
   };
