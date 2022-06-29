@@ -1,6 +1,6 @@
 
 import React from 'react'
-import Main from './MainEntryComponents/Main.jsx'
+// import Main from './MainEntryComponents/Main.jsx'
 import Header from './Header/Header.jsx'
 import PolygonOverlay from './Overlays/PolygonOverlay'
 import Projects from './ProjectComponents/Projects'
@@ -13,7 +13,7 @@ const App = () => {
   return (
     <>
       <Header />
-        <Main />
+        {/* <Main /> */}
     <PolygonOverlay /> 
       <Projects />
       <SolutionsMain />
