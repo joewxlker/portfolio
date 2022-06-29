@@ -5,7 +5,7 @@ import React from 'react'
 // import PolygonOverlay from './Overlays/PolygonOverlay'
 // import Projects from './ProjectComponents/Projects'
 // import ContactForm from './ContactComponents/ContactForm';
-// import SolutionsMain from './SolutionsComponents/SolutionsMain';
+import SolutionsMain from './SolutionsComponents/SolutionsMain';
 
 
 const App = () => {
@@ -16,9 +16,9 @@ const App = () => {
         {/* <Header />
         <Main />
         <PolygonOverlay />
-        <Projects />
+    <Projects /> */}
         <SolutionsMain />
-        <ContactForm /> */}
+        { /*<ContactForm /> */}
       </>
     );
   };
