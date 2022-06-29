@@ -1,6 +1,5 @@
 import  React from 'react';
 import { Fragment } from 'react';
-import polygon from '../../../Images/PolygonBlack.svg'
 import '../Main.css'
 
 class CanvasShapes extends React.Component {
@@ -51,7 +50,6 @@ class CanvasShapes extends React.Component {
         return (
             <Fragment>
                 <canvas id='main-canvas' className='main-Canvas' ref={canvasRef} height={'1000px'} width={'2000px'}>
-                    <svg className='main-canvasSvg' src={polygon} alt='polygon' ref={imgRef} /> 
                 </canvas>
             </Fragment>
         );

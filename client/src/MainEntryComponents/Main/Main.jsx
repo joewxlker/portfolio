@@ -5,14 +5,19 @@ import CanvasShapes from './Canvas/MainCanvas'
 import SideBar from './MainSideBar';
 import PopupMessenger from '../../MessengerComponents/PopupMessenger'
 import ReactMarkdown from 'react-markdown'
-import BackgroundCodeMarkdown from '../BgCode.md'
+import jsMarkDown from '../BgCode.md'
+import cssMarkDown from '../BgCodeCss.md'
+import jsxMarkDown from '../BgCodeJsx.md'
 
 
 const Main = () => {
 
     const [isMobile, setIsMobile] = useState(true)
     const [toggle, setToggle] = useState(false)
-    const [markdown, setMarkdown] = useState();
+    const [jsMarkdown, setJsMarkdown] = useState();
+    const [cssMarkdown, setCssMarkdown] = useState();
+    const [jsxMarkdown, setJsxMarkdown] = useState();
+    const [codeCount, setCodeCount] = useState(0)
 
     useEffect(() => {
         if (window.innerWidth < 600) setIsMobile(false)
@@ -25,14 +30,44 @@ const Main = () => {
     }, [isMobile]);
 
     useEffect(() => {
-        fetch(BackgroundCodeMarkdown).then(res => res.text()).then((text) => setMarkdown(text));
-    }, [markdown])
+        fetch(jsMarkDown).then(res => res.text()).then((text) => setJsMarkdown(text));
+    }, [jsMarkdown])
+
+    useEffect(() => {
+        fetch(cssMarkDown).then(res => res.text()).then((text) => setCssMarkdown(text));
+    }, [cssMarkdown])
+
+    useEffect(() => {
+        fetch(jsxMarkDown).then(res => res.text()).then((text) => setJsxMarkdown(text));
+    }, [jsxMarkdown])
 
     const handleChange = () => {
         window.location.reload();
     }
     window.ethereum.on('accountsChanged', handleChange);
 
+    const CodeExamples = [
+        <ReactMarkdown children={jsMarkdown}                     
+        onMouseLeave={
+        e => {
+            e.preventDefault();
+            if (toggle === undefined) return;
+            setToggle(false)
+            }}></ReactMarkdown>,
+            <ReactMarkdown children={cssMarkdown}                     
+            onMouseLeave={
+            e => {
+                e.preventDefault();
+                if (toggle === undefined) return;
+                setToggle(false)
+                }}></ReactMarkdown>,
+                <ReactMarkdown children={jsxMarkdown}                     
+                onMouseLeave={
+                e => {
+                    e.preventDefault();
+                    if (toggle === undefined) return;
+                    setToggle(false)
+                    }}></ReactMarkdown>]
     const ShowCode = () => {
         if (toggle)
             return <div className='ShowCode bg-light rounded text-light'                     
@@ -41,14 +76,11 @@ const Main = () => {
                 e.preventDefault();
                 if (toggle === undefined) return;
                 setToggle(false)
-                }}>
-                <ReactMarkdown children={markdown}                     
-                    onMouseLeave={
-                    e => {
-                        e.preventDefault();
-                        if (toggle === undefined) return;
-                        setToggle(false)
-                        }}></ReactMarkdown>
+                    }}>
+                <button className='btn p-1 bg-dark mr-2 w-25 text-accent' onClick={e => { e.preventDefault();  setCodeCount(0)}}>JS</button>
+                <button className='btn p-1 bg-light mr-2 w-25 text-dark' onClick={e => { e.preventDefault();  setCodeCount(1)}}>CSS</button>
+                <button className='btn p-1 bg-accent mr- w-25 text-dark' onClick={e => { e.preventDefault();  setCodeCount(2)}}>JSX</button>
+                {CodeExamples[codeCount]}
             </div>
     };
 
