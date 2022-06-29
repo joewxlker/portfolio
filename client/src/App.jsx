@@ -18,7 +18,7 @@ const App = () => {
         <PolygonOverlay />
         <Projects />
         <SolutionsMain />
-          <ContactForm />
+        <ContactForm />
       </Fragment>
     );
   };

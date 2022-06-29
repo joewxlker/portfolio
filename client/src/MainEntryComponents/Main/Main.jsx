@@ -3,7 +3,7 @@ import { Fragment } from 'react'
 import './Main.css'
 import CanvasShapes from './Canvas/MainCanvas'
 import SideBar from './MainSideBar';
-import PopupMessenger from '../../MessengerComponents/PopupMessenger'
+// import PopupMessenger from '../../MessengerComponents/PopupMessenger'
 import ReactMarkdown from 'react-markdown'
 import jsMarkDown from '../BgCode.md'
 import cssMarkDown from '../BgCodeCss.md'
@@ -128,7 +128,7 @@ const Main = () => {
                 <MainLinks />
                 <SideBar />
                 <CanvasShapes />
-                <PopupMessenger />
+                {/* <PopupMessenger /> */}
                 <div className='OnHoverShowCode text-accent'
                     onMouseEnter={
                         e => {
