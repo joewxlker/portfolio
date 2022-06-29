@@ -39,10 +39,10 @@ const Main = () => {
         fetch(jsxMarkDown).then(res => res.text()).then((text) => setJsxMarkdown(text));
     }, [jsxMarkdown])
 
-    const handleChange = () => {
-        window.location.reload();
-    }
-    window.ethereum.on('accountsChanged', handleChange);
+    // const handleChange = () => {
+    //     window.location.reload();
+    // }
+    // window.ethereum.on('accountsChanged', handleChange);
 
     const CodeExamples = [
         <ReactMarkdown children={jsMarkdown}                     
