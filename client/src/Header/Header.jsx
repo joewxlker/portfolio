@@ -12,7 +12,6 @@ const Header = () => {
             if (window.innerWidth < 600) setIsMobile(false)
             if (window.innerWidth > 600) setIsMobile(true)
         });
-        window.removeEventListener('resize')
     }, [isMobile]);
 
     const goToTop = (event) => {

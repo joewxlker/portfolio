@@ -26,7 +26,6 @@ const Main = () => {
             if (window.innerWidth < 600) setIsMobile(false)
             if (window.innerWidth > 600) setIsMobile(true)
         });
-        window.removeEventListener('resize')
     }, [isMobile]);
 
     useEffect(() => {
@@ -89,7 +88,6 @@ const Main = () => {
             return (
                 <>
                     <div className='Links-Container-Mobile justify-content-center align-items-center'>
-                        {/* <button className=' w-100 m-2 btn bg-outline-accent text-light'> Resume </button> */}
                         <button className='w-100 m-2 btn bg-outline-accent text-light' onClick={e => { e.preventDefault();  window.open('https://github.com/riectivnoodes/portfolio')}}> Github </button>
                         <button className='w-100 m-2 btn bg-outline-accent text-light' onClick={e => { e.preventDefault();  window.open('https://www.linkedin.com/in/joe-walker-89312a22a/')}}> Linkedin </button>
                     </div>
@@ -99,7 +97,6 @@ const Main = () => {
             return (
                 <>
                     <div className='Links-Container'>
-                        {/* <button className=' w-100 btn bg-outline-accent text-light'> Resume </button> */}
                         <div>
                         </div>
                     </div>
@@ -119,8 +116,7 @@ const Main = () => {
                         </div>
 
                         <div className='Main-welcomeContainer rounded m-5 d-flex p-3 flex-column justify-content-center align-items-center'>
-                            <h4 className='text-accent'>Welcome</h4>
-                            <h1 className=''>YOU NEED ME!</h1>
+                            <h1 className='text-accent'>Welcome</h1>
                         </div>
                     </div>
                 
@@ -128,7 +124,6 @@ const Main = () => {
                 <MainLinks />
                 <SideBar />
                 <CanvasShapes />
-                {/* <PopupMessenger /> */}
                 <div className='OnHoverShowCode text-accent'
                     onMouseEnter={
                         e => {
