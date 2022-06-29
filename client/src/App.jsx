@@ -13,8 +13,9 @@ const App = () => {
   
     return (
       <Fragment>
+        <h1>hello</h1>
         {/* <Header /> */}
-        <Main />
+        {/* <Main /> */}
         {/* <PolygonOverlay /> */}
         {/* <Projects /> */}
         {/* <SolutionsMain /> */}
