@@ -112,14 +112,15 @@ const Main = () => {
         return (
             <Fragment>
                 <div className={`${isMobile ? 'MainFlex' : 'MainFlexMobile'}`}>
-                    <div className='animated-flex d-flex flex-row justify-content-center align-items-center flex-wrap text-light'>
+                    <div className='animated-flex w-75 d-flex flex-row justify-content-center align-items-center flex-wrap text-light'>
                         <div className={`${isMobile ? 'Main-welcomeContainer ' : 'Main-welcomeContainerMobile'}`}>
                             <span className='d-flex flex-row'><h1>I am Joseph Walker</h1><div className='text-border-outline'><h1>.</h1></div></span>
-                            <p className='text-accent'>React | Web3 | Solidity | Node | Express</p>
+                            <p className='text-accent w-100'>React | Web3 | Solidity | Node | Express | MongoDB</p>
                         </div>
 
                         <div className='Main-welcomeContainer rounded m-5 d-flex p-3 flex-column justify-content-center align-items-center'>
-                            <h1>Welcome</h1>
+                            <h4 className='text-accent'>Welcome</h4>
+                            <h1 className=''>YOU NEED ME!</h1>
                         </div>
                     </div>
                 
