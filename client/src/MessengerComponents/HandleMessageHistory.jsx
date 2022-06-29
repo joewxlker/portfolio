@@ -18,7 +18,7 @@ export const PopupMessegeHistory = () => {
     useEffect(() => {
         if (address === undefined) { return };
         if (_activeChat === undefined) { return };
-        fetch('http://localhost:5000/api/friendCode', {
+        fetch('https://retralinkapi.herokuapp.com/api/friendCode', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ sender: address, receiver: _activeChat })
@@ -29,7 +29,7 @@ export const PopupMessegeHistory = () => {
 
     useEffect(() => {
         if (friendCode === undefined) { return };
-        fetch('http://localhost:5000/api/getMessages', {
+        fetch('https://retralinkapi.herokuapp.com/api/getMessages', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ friendCode: friendCode })
@@ -81,7 +81,7 @@ export const PopupMessegeHistory = () => {
         event.preventDefault();
         if (address === undefined) return
         setLoading(true)
-        await fetch('http://localhost:5000/api/createAccount', {
+        await fetch('https://retralinkapi.herokuapp.com/api/createAccount', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ sender: address, username: value.name })
@@ -98,7 +98,7 @@ export const PopupMessegeHistory = () => {
         // attempting to send multiple transactions from the same _address requires gas/nonce handling
         event.preventDefault();
         setLoading(true)
-        await fetch('http://localhost:5000/api/sendMessage', {
+        await fetch('https://retralinkapi.herokuapp.com/api/sendMessage', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ sender: address, receiver: _activeChat, message: value.message })

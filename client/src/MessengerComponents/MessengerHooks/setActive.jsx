@@ -8,7 +8,7 @@ const useSetActive = () => {
 
     useEffect(() => {
             console.log()
-            fetch('http://localhost:5000/api/activeChat', {
+            fetch('https://retralinkapi.herokuapp.com/api/activeChat', {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ sender: address })

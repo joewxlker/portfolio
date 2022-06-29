@@ -7,7 +7,7 @@ const useUserInfo = () => {
     const address = useSetUserAddress();
 
     useEffect(() => {
-            fetch('http://localhost:5000/api/userInfo', {
+            fetch('https://retralinkapi.herokuapp.com/api/userInfo', {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ sender: address })
