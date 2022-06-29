@@ -55,7 +55,11 @@
 
 .HeaderMobile-dropdown-button{
     position: fixed;
+    top: center;
+    display:block;
     height: 50px;
+    margin: auto;
+    width: 90%;
 }
 
 .polygon-svg-spinner{
