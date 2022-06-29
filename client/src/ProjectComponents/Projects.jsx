@@ -37,6 +37,7 @@ const Projects = () => {
                 <div className='SectionOne-cardsMain w-100 d-flex flex-column justify-content-center align-items-center'>
                     <h1>Projects</h1>
                     <div className='SectionOne-Cards d-flex w-75 justify-content-center align-items-center'>
+                    <button className='btn' onClick={() => { if (count > 1) { setCount(count - 1) } else { setCount(4) } }}><h3>{`<`}</h3></button>
                         <Carousel />
                         <button className='btn' onClick={() => { if (count < 4) { setCount(count + 1) } else { setCount(1) } }}><h3>{`>`}</h3></button>
                     </div>

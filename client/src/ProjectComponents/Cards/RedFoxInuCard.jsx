@@ -15,11 +15,13 @@ export const RedFoxInuCard = () => {
 };
 
 export const RedFoxInuMobile = () => {
+    return(
     <div className='SectionOne-Card-Mobile'>
         <span className='w-100  d-flex flex-column justify-content-center align-items-center'>
             <h2 className='text-light'>Red Fox Inu</h2>
-            <img className='redfoxinu-img' src={RedFoxImage} alt='redfoxinu'/>
+            <img className='redfoxinu-img-mobile' src={RedFoxImage} alt='redfoxinu'/>
             <p className='text-light'></p>
             <button className=' w-100 mt-2 btn bg-accent Live-Preview-button' onClick={e => { e.preventDefault(); window.open('https://www.redfoxinu.com/') }}>Live Preview</button>
-        </span></div>
+            </span></div>
+    )
 }
