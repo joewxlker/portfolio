@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Fragment } from 'react'
 import './Main.css'
 import CanvasShapes from '../CanvasComponents/MainCanvas'
 import SideBar from './MainSideBar';
@@ -107,7 +106,7 @@ const Main = () => {
 
     if (isMobile) {
         return (
-            <Fragment>
+            <>
                 <div className={`${isMobile ? 'MainFlex' : 'MainFlexMobile'}`}>
                     <div className='animated-flex w-75 d-flex flex-row justify-content-center align-items-center flex-wrap text-light'>
                         <div className={`${isMobile ? 'Main-welcomeContainer ' : 'Main-welcomeContainerMobile'}`}>
@@ -133,10 +132,10 @@ const Main = () => {
                     View Code!
                 </div>
                 <ShowCode />
-            </Fragment>
+            </>
         )
     } else return (
-        <Fragment>
+        <>
         <div className='MainFlexMobile'>
             <div className='d-flex flex-row justify-content-center align-items-center flex-wrap text-light'>
                 <div className='Main-welcomeContainerMobile'>
@@ -152,7 +151,7 @@ const Main = () => {
             </div>
         
         </div>
-    </Fragment>
+    </>
     )
 } 
 
