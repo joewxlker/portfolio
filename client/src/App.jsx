@@ -1,7 +1,7 @@
 
 import React from 'react'
 import Main from './MainEntryComponents/Main.jsx'
-import Header from './Header/Header.jsx'
+// import Header from './Header/Header.jsx'
 import PolygonOverlay from './Overlays/PolygonOverlay'
 import Projects from './ProjectComponents/Projects'
 import ContactForm from './ContactComponents/ContactForm';
@@ -12,8 +12,7 @@ const App = () => {
   
   return (
     <>
-      <h1>hello</h1>
-      <Header />
+      {/* <Header /> */}
         <Main />
     <PolygonOverlay /> 
       <Projects />
