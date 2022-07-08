@@ -6,7 +6,6 @@ import ReactMarkdown from 'react-markdown'
 import jsMarkDown from './BgCode.md'
 import cssMarkDown from './BgCodeCss.md'
 import jsxMarkDown from './BgCodeJsx.md'
-import PopupMessenger from '../MessengerComponents/PopupMessenger'
 
 
 const Main = () => {
@@ -133,7 +132,6 @@ const Main = () => {
                     View Code!
                 </div>
                 <ShowCode />
-                <PopupMessenger/>
             </>
         )
     } else return (

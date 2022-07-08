@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './Contact.css'
+import { sendPostData } from '../Services/senddata';
 
 const ContactForm = () => {
 
@@ -7,7 +8,18 @@ const ContactForm = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // if (value.name === undefined || value.email === undefined) return alert('please enter your name and email')
+        console.log(value)
+        let valueOne = false
+        let valueTwo = false
+        if (value.name === undefined || value.email === undefined) return alert('please enter your name and email')
+        if (value.name === "" || value.email === "") return alert('please enter your name and email')
+        for (let v in value.email) {
+            if (value.email[v] === '@') valueOne = true;
+            if (value.email[v] === '.') valueTwo = true;
+        }
+        if (valueOne === false || valueTwo === false) return alert('Please enter a valid email')
+
+        sendPostData({name:value.name, email:value.email, message: value.message}, 'http://localhost:5000','email')
         alert( `Thank you ${value.name} for contacting me I'll be in touch`)
         setValues((values) => ({
             ...values,
