@@ -19,7 +19,7 @@ const ContactForm = () => {
         }
         if (valueOne === false || valueTwo === false) return alert('Please enter a valid email')
 
-        sendPostData({name:value.name, email:value.email, message: value.message}, 'http://localhost:5000','email')
+        sendPostData({name:value.name, email:value.email, message: value.message}, 'https://josephsportfolio.herokuapp.com/','email')
         alert( `Thank you ${value.name} for contacting me I'll be in touch`)
         setValues((values) => ({
             ...values,
